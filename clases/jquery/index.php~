@@ -1,0 +1,29 @@
+<html>
+	<head>
+		<script type="text/javascript" src='jquery-1.3.2.min.js'></script>
+		<script type="text/javascript" src='cust_select_plugin.js'></script>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" type="text/css" href="generalstyle.css">
+	</head>
+
+<script>
+	$(document).ready( function() {
+		$("select").custSelectBox();
+		
+	});
+</script>
+	<body>
+		<label class="lbl_header">COMBO SELECCION MULTIPLE</label>
+		<div class="select_wrap">
+			<select name="sample_select"  class="select_field" multiple="multiple" style="width:250px;">
+				<option>Seleccione una o Varias Opciones...</option>
+				<option value="1">Option One</option>
+				<option value="2">Option Two</option>
+				<option value="3">Option Three</option>
+				<option value="4">Option Four</option>
+			</select>
+		</div>
+	</body>
+</html>
+
+

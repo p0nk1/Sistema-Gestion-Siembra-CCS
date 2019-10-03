@@ -1,0 +1,335 @@
+
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: Arial,sans-serif;
+    line-height: 1.166;
+}
+img {border:none;}
+
+h1 {
+    margin: 0px;
+    padding: 0px;
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 110%;
+    color: #5B5B5B;
+    text-align: center;
+}
+hr {
+    border:  none;
+    margin: 5px;
+    padding: 0px;
+    color: #cc3300;
+    background-color: #cc3300;
+    height: 1px;
+}
+fieldset {
+    border: 1px solid #cc3300;
+}
+legend {
+    color: black;
+    font-weight: bold;
+}
+
+textarea {
+    resize:none;
+}
+/******************************************************************************************************************************************/
+.tablaForm{
+    border: 1px solid #a6a6a6;
+    border-radius: 5px;
+    background-image: -webkit-gradient(linear, undefined, from(#fcfcfc), to(#bfbfbf), color-stop(23%, #000), color-stop(56%, rgba()), color-stop(63%, #f2f2f2));
+    background-image: -webkit-linear-gradient(-60deg, #fcfcfc, #000 23%, rgba() 56%, #f2f2f2 63%, #bfbfbf);
+    background-image: -moz-linear-gradient(-60deg, #fcfcfc, #000 23%, rgba() 56%, #f2f2f2 63%, #bfbfbf);
+    background-image: -o-linear-gradient(-60deg, #fcfcfc, #000 23%, rgba() 56%, #f2f2f2 63%, #bfbfbf);
+    background-image: -ms-linear-gradient(-60deg, #fcfcfc, #000 23%, rgba() 56%, #f2f2f2 63%, #bfbfbf);
+    background-image: linear-gradient(-60deg, #fcfcfc, #000 23%, rgba() 56%, #f2f2f2 63%, #bfbfbf);
+}
+.tituloBackground {
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    color: #9f0707;
+    text-decoration: none;
+    height: 20px;
+    text-transform:uppercase;
+    border-bottom: 1px solid #cc3300;
+}
+.tituloRegresar {
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    color: #9f0707;
+    text-decoration: none;
+    height: 20px;
+    text-transform:uppercase;
+    /*border-bottom: 1px solid #cc3300;*/
+}
+.subtituloBackground {
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    color: #5B5B5B;
+    text-decoration: none;
+    height: 60px;
+    border-bottom: 1px dotted #5B5B5B;
+}
+.tituloForm {
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+    font-family: Arial,Helvetica,sans-serif;
+    color: #5B5B5B;
+}
+.textoCampo {
+    font-size: 12px;
+    text-decoration: none;
+    font-family: Arial,Helvetica,sans-serif;
+    color: Black;
+}
+.tituloTablas {
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #5B5B5B;
+}
+.textoParrafo {
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 14px;
+    color: #5B5B5B;
+    background-color: #FFFFFF
+}
+
+.logo_principal {
+    background: transparent url(../imagenes/icono_gobiernoparroquial2.png) no-repeat scroll center bottom;
+}
+a.link, a.link:visited, a.link:active, a.link:focus, a.link:link {
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 11px;
+    text-decoration: underline;
+    color: #cc3300;
+}
+a.link:hover {
+    text-decoration: none;
+    font-weight: bold;
+    color: #cc3300;
+}
+.alerta2 {
+    font-size: 16px;
+    font-family: Verdana,Helvetica;
+    font-weight: bold;
+    color: #ff0000;
+    text-align: center;
+}
+.botonPeq {
+    border: 1px solid #a6a6a6;
+    border-radius: 5px;
+    background-image: -webkit-gradient(linear, undefined, from(#fcfcfc), to(#bfbfbf), color-stop(23%, #000), color-stop(56%, rgba()), color-stop(63%, #f2f2f2));
+    background-image: -webkit-linear-gradient(-60deg, #fcfcfc, #000 23%, rgba() 56%, #f2f2f2 63%, #bfbfbf);
+    background-image: -moz-linear-gradient(-60deg, #fcfcfc, #000 23%, rgba() 56%, #f2f2f2 63%, #bfbfbf);
+    background-image: -o-linear-gradient(-60deg, #fcfcfc, #000 23%, rgba() 56%, #f2f2f2 63%, #bfbfbf);
+    background-image: -ms-linear-gradient(-60deg, #fcfcfc, #000 23%, rgba() 56%, #f2f2f2 63%, #bfbfbf);
+    background-image: linear-gradient(-60deg, #fcfcfc, #000 23%, rgba() 56%, #f2f2f2 63%, #bfbfbf);
+    width: 90px;
+    height: 25px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #9f0707;
+    text-decoration: none;
+}
+.botonGrande {
+    border: 1px solid #a6a6a6;
+    border-radius: 5px;
+    background-image: -webkit-gradient(linear, undefined, from(#fcfcfc), to(#bfbfbf), color-stop(23%, #000), color-stop(56%, rgba()), color-stop(63%, #f2f2f2));
+    background-image: -webkit-linear-gradient(-60deg, #fcfcfc, #000 23%, rgba() 56%, #f2f2f2 63%, #bfbfbf);
+    background-image: -moz-linear-gradient(-60deg, #fcfcfc, #000 23%, rgba() 56%, #f2f2f2 63%, #bfbfbf);
+    background-image: -o-linear-gradient(-60deg, #fcfcfc, #000 23%, rgba() 56%, #f2f2f2 63%, #bfbfbf);
+    background-image: -ms-linear-gradient(-60deg, #fcfcfc, #000 23%, rgba() 56%, #f2f2f2 63%, #bfbfbf);
+    background-image: linear-gradient(-60deg, #fcfcfc, #000 23%, rgba() 56%, #f2f2f2 63%, #bfbfbf);
+    width: 200px;
+    height: 25px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #9f0707;
+    text-decoration: none;
+}
+.originalTextareaInfo {
+    font-size: 11px;
+    font-family: Verdana,Helvetica;
+    color: #5B5B5B;
+    text-align: right;
+}
+.warningTextareaInfo {
+    font-size: 11px;
+    font-family: Verdana,Helvetica;
+    color: #cc3300;
+    text-align: right;
+}
+/******************************************************************************************************************************************/
+.sub_titulo {
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 15px;
+    text-align: left;
+    font-weight: bold;
+    font-style: italic;
+    color: black;
+    text-decoration: none;
+    height: 20px;
+}
+
+.texto_negro_planilla {
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    color: black;
+}
+.texto_negro_no_size {
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    color: black;
+}
+.texto_negro_fila_o {
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+    background-color: #d5d5d5;
+}
+.texto_negro_fila_c {
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+    background-color: #eaeaea;
+}
+.texto_rojo{
+    font-family:Arial,Verdana,Bitstream Vera Sans, Sans,Sans-serif;
+    font-size:12px;
+    font-weight:bold;
+    color:#cc3300;
+
+}
+.texto_blanco {
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    color: white;
+}
+.texto_campo {
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 11px;
+    color: black;
+    width: 30%;
+}
+.texto_campo_planilla {
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 11px;
+    color: black;
+}
+.texto_campo_no_size {
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 11px;
+    color: black;
+}
+.boton {
+    border: thin solid #8f8f8f;
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #cc3300;
+    text-decoration: none;
+    background-color: #f2f2f2;
+    cursor: pointer;
+    text-transform: uppercase;
+    width: 90px;
+    height: 25px;
+}
+.boton2 {
+    border: thin solid #8f8f8f;
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    color: #cc3300;
+    text-decoration: none;
+    background-color: #f2f2f2;
+    cursor: pointer;
+    text-transform: uppercase;
+    width: 70px;
+    height: 18px;
+}
+.ayuda {
+    width: 13px;
+    text-align: center;
+}
+#mensajesAyuda {
+    border: 1px solid #cc3300;
+    width: 160px;
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 10px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: none;
+    text-align: center;
+}
+#ayudaTitulo {
+    padding: 1px;
+    background-color: #cc3300;
+    color: #ffffff;
+}
+#ayudaTexto {
+    padding: 2px;
+    vertical-align: middle;
+}
+.campo_obligatorio {
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    color: red;
+}
+textarea {
+    border: 2px solid #cccccc;
+    color: #555555;
+    font-family: Arial,Helvetica,sans-serif;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: normal;
+    font-size-adjust: none;
+    font-stretch: normal;
+}
+form .counter {
+    font-size: 12px;
+    font-weight: bold;
+    color: #cccccc;
+}
+form .warning {
+    color: #660000;
+}
+form .exceeded {
+    color: #cc3300;
+}
+input[type="text"], select, textarea, input[type="password"], input[type="file"], input[type="radio"] {
+    border: 1px solid #cccccc;
+    background-color: #f2f2f2;
+}
+input[type="text"]:focus, select:focus, textarea:focus, field:focus, input[type="password"]:focus, input[type="file"]:focus, input[type="radio"]:focus {
+    border: 1px solid #9f0707;
+    background-color: #ffffff;
+}
+input, select, textarea {
+    margin: 2px;
+    font-family: Arial,Verdana,Bitstream Vera Sans,Sans,Sans-serif;
+    font-size: 11px;
+    font-weight: normal;
+}

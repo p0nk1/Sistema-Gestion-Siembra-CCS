@@ -1,0 +1,24 @@
+version: '3'
+services:
+  web:
+    restart: always
+    #con esta instrccion se toma el archivo Dockerfile que esta dentro de la carpeta
+    build: .
+    #cambiar el nombre de la imagen por uno propio
+    image: chaaggyy/debian7-apache2.2-php5.4
+    depends_on:
+      - db
+    ports:
+      - "8010:80"
+    volumes:
+      - .:/var/www/html
+  db:
+    restart: always
+    image: postgres:9.4
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=123456
+    volumes:
+      - /opt/siembracaracas_data:/var/lib/postgresql/data
+volumes:
+  psqldata:

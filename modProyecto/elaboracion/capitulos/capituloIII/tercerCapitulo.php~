@@ -1,0 +1,82 @@
+<?php
+	session_start();
+	include_once ("../../../../funciones/funciones_session.php");
+	comprobarSession($_SESSION['adminProy']);
+	include_once ("../../../../conexion/conexionpg.php");
+	include_once ("../../../../funciones/queryProyectos.php");
+	include_once ("../../../../funciones/funciones.php");
+	extract($_POST);
+	extract($_GET);
+?>
+<HTML>
+	<HEAD>
+		<TITLE>CAPITULO I</TITLE>
+		<link rel="stylesheet" type="text/css" href="../../../../css/css.css">
+		<link rel="stylesheet" type="text/css" href="../../../../js/accordeon/accordion.css">
+		<script src="../../../../js/general.js" type="text/javascript"></script>
+		<script src="../../../../js/accordeon/jquery.js" type="text/javascript"></script>
+		<script src="../../../../js/accordeon/jquery-ui.js" type="text/javascript"></script>
+		<script src="../../../../js/accordeon/cory-accordion-noConflict.js" type="text/javascript"></script>
+	</HEAD>
+	<BODY>
+		<TABLE id="tablaTitulo" border="0" cellpadding="0" cellspacing="0" align="center" width="90%">
+			<TR><TD class="subtituloBackground"> OBJETIVOS DEL PROYECTO </TD></TR>
+		</TABLE>
+		<BR>
+		<FORM action="" id="formRegPrimerCap" name="formRegPrimerCap" method="POST" onsubmit="">
+		<TABLE id="tablaIdSolicitante" border="0" cellpadding="2" cellspacing="2" align="center" width="80%">
+		<TR>
+			<TD>
+			<div id="accordion">
+				<div class="section">
+					<h2>OBJETIVO GENERAL DEL PROYECTO</h2>
+					<div class="section-content">
+						<TABLE border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
+							<TR bgcolor="White"><TD align="center"><BR><TEXTAREA name="" id="" rows="10" cols="153"><??></TEXTAREA><BR><BR></TD></TR>
+						</TABLE>
+					</div>
+				</div>
+				<div class="section">
+					<h2>OBJETIVO GENERAL DEL PROYECTO</h2>
+					<div class="section-content">
+						<TABLE border="0" cellpadding="0" cellspacing="0" align="center" width="95%">
+							<TR>
+								<TD>
+								<TABLE border="0" cellpadding="0" cellspacing="1" width="100%" bgcolor="#D6D6D6">
+									<TR>
+										<TD bgcolor="#F2F2F2" align="center" class="tituloTablas" colspan="2">OBJETIVOS ESPECIFICOS</TD>
+									</TR>
+									<TR>
+										<TD bgcolor="White"><TEXTAREA name="objetivoEspecifico" id="objetivoEspecifico" rows="2" cols="140"><?=$objetivoEspecifico?></TEXTAREA></TD>
+										<TD bgcolor="White"><IMG id="agregar" onclick="validarObjetivo('objetivoEspecifico','tablaObjetivos')" src="../../../imagenes/add_page.png" title="Agregar"></TD>
+									</TR>
+								</TABLE>
+								</TD>
+							</TR>
+							<TR>
+								<TD><BR>
+								<TABLE border="0" cellpadding="0" cellspacing="1" width="95%" bgcolor="#D6D6D6" id="tablaObjetivos">
+									<TR>
+										<TD bgcolor="#F2F2F2" align="center" class="tituloTablas" colspan="2">OBJETIVOS ESPECIFICOS AGREGADOS</TD>
+									</TR>
+								</TABLE><BR>
+								</TD>
+							</TR>
+						</TABLE>
+					</div>
+				</div>
+				<div class="section">
+					<h2>INFORMACION DE LA ACTIVIDAD ECONOMICA</h2>
+					<div class="section-content">
+						<TABLE border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
+							<TR bgcolor="White"><TD align="center"><BR><TEXTAREA name="" id="" rows="10" cols="153"><??></TEXTAREA><BR><BR></TD></TR>
+						</TABLE>
+					</div>
+				</div>
+			</div>
+			</TD>
+		</TR>
+		</TABLE>
+		</FORM>
+	</BODY>
+</HTML>

@@ -1,0 +1,26 @@
+					<TABLE border="0" cellpadding="0" cellspacing="0" align="center" width="75%">
+						<TR><TD class="tituloForm">Nombre de la Organizaci&oacute;n/Comunidad</TD></TR>
+						<TR><TD><TEXTAREA name="nombComunidad" id="nombComunidad" rows="2" cols="120"></TEXTAREA></TD></TR>
+						<TR><TD class="tituloForm">Nombre de la Comuna</TD></TR>
+						<TR><TD><TEXTAREA name="nombComuna" id="nombComuna" rows="2" cols="120"></TEXTAREA></TD></TR>
+						<TR><TD class="tituloForm">Ubicacion Geogr&aacute;fica</TD></TR>
+						<TR>
+							<TD>
+								<BR>
+								<TABLE border="0" cellpadding="0" cellspacing="1" align="center" width="100%" bgcolor="#D6D6D6">
+									<TR>
+										<TD class="tituloTablas" align="center" bgcolor="#F2F2F2">Estado</TD>
+										<TD class="tituloTablas" align="center" bgcolor="#F2F2F2">Municipio</TD>
+										<TD class="tituloTablas" align="center" bgcolor="#F2F2F2">Parroquia</TD>
+										<TD class="tituloTablas" align="center" bgcolor="#F2F2F2">Comunidad</TD>
+									</TR>
+									<TR>
+										<TD align="center" bgcolor="White"><?=cargarComboConEvento('estado',$conn,queryComboEstado(),$estado,"onchange='cargarEstado()'");?></TD>
+										<TD align="center" bgcolor="White"><div id='id_municipio'><select name='municipio' id='municipio' data-placeholder='Seleccione Estado...' class='chzn-select' style='width:150px;' tabindex='2'><option value=''>Seleccione Estado</option></select></div></TD>
+										<TD align="center" bgcolor="White"><div id='id_parroquia'><select name='parroquia' id='parroquia' data-placeholder='Seleccione Estado...' class='chzn-select' style='width:150px;' tabindex='2'><option value=''>Seleccione Municipio</option></select></div></TD>
+										<TD align="center" bgcolor="White"><INPUT type="text"  name="comunidad" id="comunidad" size="30"></TD>
+									</TR>
+								</TABLE>
+							</TD>
+						</TR>
+					</TABLE>

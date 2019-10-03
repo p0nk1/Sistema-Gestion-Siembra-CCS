@@ -1,0 +1,62 @@
+
+			function validarCampoVacio(valorCampo){
+				if(valorCampo=="" || valorCampo=="0" || valorCampo==0 || valorCampo==null) return true
+				else return false;
+			}
+			function validacion(){
+				banderaVacio=true;
+
+				nombreProyecto =document.getElementById('nombreProy');
+				errorNombreProy = document.getElementById("errorNombreProy");  // Cogemos la referencia al nuestro div.
+				nombComunidad =document.getElementById('nombComunidad');
+				errorNombComunidad = document.getElementById("errorNombComunidad");  // Cogemos la referencia al nuestro div.
+				nombComuna =document.getElementById('nombComuna');
+				errorNombComuna = document.getElementById("errorNombComuna");  // Cogemos la referencia al nuestro div.
+				estado=document.getElementById('estado');
+				errorEstado = document.getElementById("errorEstado");  // Cogemos la referencia al nuestro div.
+				municipio=document.getElementById('municipio');
+				errorMunicipio = document.getElementById("errorMunicipio");  // Cogemos la referencia al nuestro div.
+				parroquia=document.getElementById('parroquia');
+				errorParroquia = document.getElementById("errorParroquia");  // Cogemos la referencia al nuestro div.<br>
+				comunidad=document.getElementById('comunidad');
+				errorComunidad = document.getElementById("errorComunidad");  // Cogemos la referencia al nuestro div.
+
+				valorNombreProyecto =nombreProyecto.value
+				valorNombComunidad =nombComunidad.value
+				valorNombComuna =nombComuna.value
+				valorEstado = estado.value
+				valorMunicipio = municipio.value
+				valorParroquia = parroquia.value
+				valorComunidad = comunidad.value
+
+				errorNombreProy.innerHTML  = "";  //innerHTML te añade código a lo que ya haya por eso primero lo ponemos en blanco.
+				errorNombComunidad.innerHTML  = "";  //innerHTML te añade código a lo que ya haya por eso primero lo ponemos en blanco.
+				errorNombComuna.innerHTML  = "";  //innerHTML te añade código a lo que ya haya por eso primero lo ponemos en blanco.
+				errorEstado.innerHTML = ""; //innerHTML te añade código a lo que ya haya por eso primero lo ponemos en blanco.
+				errorMunicipio.innerHTML  = "";  //innerHTML te añade código a lo que ya haya por eso primero lo ponemos en blanco.
+				errorParroquia.innerHTML = ""; //innerHTML te añade código a lo que ya haya por eso primero lo ponemos en blanco.
+				errorComunidad.innerHTML = ""; //innerHTML te añade código a lo que ya haya por eso primero lo ponemos en blanco.
+
+				if(validarCampoVacio(valorNombreProyecto)){
+					html = "Debe Indicar el Nombre del Proyecto"; errorNombreProy.innerHTML = html; banderaVacio=false;
+				}
+				if (validarCampoVacio(valorNombComunidad)){
+					html = "Indique el Nombre de la Comunidad"; errorNombComunidad.innerHTML = html; banderaVacio=false;
+				}
+				if(validarCampoVacio(valorNombComuna)){
+					html = "Indique el Nombre de la Comuna"; errorNombComuna.innerHTML = html; banderaVacio=false;
+				}
+				if (validarCampoVacio(valorEstado)){
+					html = "Seleccione un Estado"; errorEstado.innerHTML = html; banderaVacio=false;
+				}
+				if(validarCampoVacio(valorMunicipio)){
+					html = "Seleccione un Municipio"; errorMunicipio.innerHTML = html; banderaVacio=false;
+				}
+				if (validarCampoVacio(valorParroquia)){
+					html = "Seleccione una Parroquia"; errorParroquia.innerHTML = html; banderaVacio=false;
+				}
+				if(validarCampoVacio(valorComunidad)){
+					html = "Indique el Nombre de la Comunidad"; errorComunidad.innerHTML = html; banderaVacio=false;
+				}
+			return banderaVacio;
+			}

@@ -1,0 +1,446 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"a",
+				"a\t<a>"
+			],
+			[
+				"red",
+				"redirect"
+			],
+			[
+				"u",
+				"update"
+			],
+			[
+				"emple",
+				"empleado"
+			],
+			[
+				"va",
+				"value\tAttr"
+			],
+			[
+				"carg",
+				"cargos"
+			],
+			[
+				"RE",
+				"Request"
+			],
+			[
+				"na",
+				"name\tAttr"
+			],
+			[
+				"ca",
+				"class\tAttr"
+			],
+			[
+				"consu",
+				"consulta"
+			],
+			[
+				"con",
+				"consulta"
+			],
+			[
+				"crea",
+				"create"
+			],
+			[
+				"us",
+				"use"
+			],
+			[
+				"re",
+				"request"
+			],
+			[
+				"ac",
+				"action\tAttr"
+			],
+			[
+				"navb",
+				"navbar-nav"
+			],
+			[
+				"bac",
+				"background-color"
+			],
+			[
+				"fo",
+				"flood-color"
+			],
+			[
+				"bo",
+				"bottom"
+			],
+			[
+				"t",
+				"top"
+			],
+			[
+				"sty",
+				"stylesheet"
+			],
+			[
+				"cont",
+				"container"
+			],
+			[
+				"bod",
+				"body"
+			],
+			[
+				"mar",
+				"margin-right"
+			],
+			[
+				"inl",
+				"inline-block"
+			],
+			[
+				"h",
+				"height"
+			],
+			[
+				"vi",
+				"view"
+			],
+			[
+				"ret",
+				"return"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"c",
+				"conexion"
+			],
+			[
+				"T",
+				"True"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"Snippet: form",
+				"Snippet: <form>"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: inst",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"File: New View into File"
+			]
+		],
+		"width": 587.0
+	},
+	"console":
+	{
+		"height": 178.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/var/www/html/siembra-caracas/clases/validacion/forms.inc.php",
+		"/var/www/html/siembra-caracas/mod_usuario/registrarusuario.php",
+		"/var/www/html/siembra-caracas/mod_usuario/consultarUsuario.php",
+		"/var/www/html/siembra-caracas/mod_usuario/asignarPermisos.php",
+		"/var/www/html/siembra-caracas/conexion/conexionpg.php",
+		"/var/www/html/siembra-caracas/conexion/conn.php",
+		"/var/www/html/ModSisRRHH/resources/views/layouts/footer.blade.php",
+		"/var/www/html/ModSisRRHH/resources/views/layouts/app.blade.php",
+		"/var/www/html/ModSisRRHH/resources/views/formregempleado.blade.php",
+		"/var/www/html/ModSisRRHH/Requerimientos e informacion/Lista de Cargos pre definidos en el sistema.txt",
+		"/var/www/html/ModSisRRHH/Requerimientos e informacion/tbdefnomina.txt",
+		"/var/www/html/ModSisRRHH/Requerimientos e informacion/tbnomina.txt",
+		"/var/www/html/ModSisRRHH/Requerimientos e informacion/info RestoreBDD GYT RRHH.txt",
+		"/var/www/html/ModSisRRHH/Requerimientos e informacion/tbperiodos.txt",
+		"/var/www/html/ModSisRRHH/Requemientos e informacion/tbnomina.txt",
+		"/var/www/html/ModSisRRHH/Requerimeintos e informacion/tbnomina",
+		"/var/www/html/ModSisRRHH/Requerimientos e informacio/tbperiodos.txt",
+		"/var/www/html/ModSisRRHH/app/Http/Controllers/EmpleadosController.php",
+		"/var/www/html/ModSisRRHH/resources/views/modificaremp.blade.php",
+		"/var/www/html/ModSisRRHH/database/migrations/2018_05_06_053045_create_tbstatemps_table.php",
+		"/var/www/html/ModSisRRHH/database/migrations/2018_05_06_161947_create_tbcargos_table.php",
+		"/var/www/html/ModSisRRHH/app/Empleado.php",
+		"/var/www/html/ModSisRRHH/database/migrations/2018_05_07_231950_create_tbempleado_table.php",
+		"/var/www/html/ModSisRRHH/resources/views/consultempleado.blade.php",
+		"/var/www/html/ModSisRRHH/.env",
+		"/var/www/html/ModSisRRHH/database/migrations/2018_05_21_053418_add_statemp_id_to_tbempleado_table.php",
+		"/var/www/html/ModSisRRHH/database/migrations/2018_05_17_174525_add_cargo_id_to_tbempleado_table.php",
+		"/var/www/html/ModSisRRHH/routes/web.php",
+		"/var/www/html/ModSisRRHH/resources/views/_form-reg-edit-emp.blade.php",
+		"/home/chaaggyy/.config/sublime-text-3/Packages/Terminal/Terminal.sublime-settings",
+		"/home/chaaggyy/.config/sublime-text-3/Packages/Color Highlighter/ColorHighlighter.sublime-settings",
+		"/home/chaaggyy/.config/sublime-text-3/Packages/AutoFileName/autofilename.sublime-settings",
+		"/home/chaaggyy/.config/sublime-text-3/Packages/User/PHP.sublime-settings",
+		"/home/chaaggyy/.config/sublime-text-3/Packages/Alignment/Base File.sublime-settings",
+		"/home/chaaggyy/.config/sublime-text-3/Packages/AdvancedNewFile/README.md",
+		"/home/chaaggyy/Documentos/ProyectosLaravel/RRHHv1/apache2.conf",
+		"/home/chaaggyy/Documentos/ProyectosLaravel/RRHHv1/Dockerfile",
+		"/etc/apache2/sites-enabled/000-default.conf",
+		"/etc/apache2/apache2.conf",
+		"/var/www/html/ModSisRRHH/app/Http/Controllers/HomeController.php",
+		"/var/www/html/ModSisRRHH/app/Tbcargo.php",
+		"/var/www/html/ModSisRRHH/database/migrations/2018_05_17_161947_create_tbcargos_table.php",
+		"/home/chaaggyy/.config/sublime-text-3/Packages/Git/Git.sublime-settings",
+		"/var/www/html/ModSisRRHH/public/css/app.css",
+		"/home/chaaggyy/.config/sublime-text-3/Packages/User/ColorHighlighter.sublime-settings",
+		"/home/chaaggyy/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/chaaggyy/.config/sublime-text-3/Packages/User/Package Control.sublime-settings",
+		"/var/www/html/ModSisRRHH/vendor/laravel/framework/src/Illuminate/Support/Collection.php",
+		"/var/www/html/ModSisRRHH/resources/assets/sass/app.scss",
+		"/var/www/html/ModSisRRHH/resources/views/home.blade.php",
+		"/var/www/html/ModSisRRHH/resources/views/bienvenido.blade.php",
+		"/var/www/html/ModSisRRHH/resources/views/pruebanav.php",
+		"/var/www/html/ModSisRRHH/package.json",
+		"/var/www/html/ModSisRRHH/resources/views/auth/login.blade.php",
+		"/var/www/html/ModSisRRHH/public/css/login.css",
+		"/var/www/html/ModSisRRHH/resources/views/welcome.blade.php",
+		"/var/www/html/ModSisRRHH/resources/views/inicio_original.blade.php",
+		"/var/www/html/proyecto1/resources/views/home.blade.php",
+		"/var/www/html/proyecto1/resources/views/layouts/codigo_restante.php",
+		"/var/www/html/proyecto1/resources/views/welcome.blade.php",
+		"/var/www/html/proyecto1/resources/views/layouts/app.blade.php",
+		"/var/www/html/proyecto1/resources/views/prueba.blade.php",
+		"/var/www/html/proyecto1/routes/web.php",
+		"/var/www/html/proyecto1/.env",
+		"/var/www/html/votaciones2018/resources/assets/js/app.js",
+		"/var/www/html/info.php",
+		"/var/www/html/proyecto1/public/index.php",
+		"/var/www/html/pruebajs.html",
+		"/var/www/html/proyecto1/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
+		"/var/www/html/proyecto1/vendor/symfony/routing/Route.php",
+		"/var/www/html/proyecto1/vendor/laravel/framework/src/Illuminate/Routing/RouteRegistrar.php",
+		"/var/www/html/proyecto1/vendor/symfony/routing/Router.php",
+		"/var/www/html/proyecto1/tests/Feature/modpruebas.php",
+		"/var/www/html/proyecto1/config/app.php",
+		"/var/www/html/proyecto1/public/.htaccess",
+		"/var/www/html/alejandro (copia)/.env",
+		"/var/www/html/proyecto1/vendor/laravel/framework/src/Illuminate/Database/Schema/Blueprint.php",
+		"/home/chaaggyy/odoo-dev/custom-addons/todo_app/views/todo_view.xml",
+		"/home/chaaggyy/odoo-dev/custom-addons/todo_app/__manifest__.py",
+		"/home/chaaggyy/odoo-dev/custom-addons/todo_app/views/todo_menu.xml",
+		"/home/chaaggyy/odoo-dev/custom-addons/todo_app/test/test_todo.py",
+		"/home/chaaggyy/odoo-dev/custom-addons/Randall/todo_app/models/todo_model.py",
+		"/home/chaaggyy/python/socketnet.py",
+		"/home/chaaggyy/python/hola.py",
+		"/home/chaaggyy/odoo-dev/custom-addons/todo_app/models/todo_model.py",
+		"/home/chaaggyy/odoo-dev/custom-addons/todo_app/__init__.py",
+		"/home/chaaggyy/python/client.py",
+		"/home/chaaggyy/python/prueba.py",
+		"/home/chaaggyy/odoo/docker-compose.yml",
+		"/media/chaaggyy/AA84895E84892E3F/Respaldo EdgarR/Descargas/Franyuer (bar-restaurant).dia",
+		"/home/chaaggyy/odoo-dev/custom-addons/Randall/todo_app/views/todo_view.xml",
+		"/tmp/.fr-vPj27z/todo_app/views/todo_view.xml",
+		"/home/chaaggyy/odoo-dev/custom-addons/todo_app/models/__init__.py",
+		"/home/chaaggyy/odoo-dev/custom-addons/todo_app/test/__init__.py",
+		"/home/chaaggyy/odoo-dev/custom-addons/todo_app/todo_model.py",
+		"/home/chaaggyy/odoo-dev/odoo/requirements.txt",
+		"/home/chaaggyy/odoo-dev/odoo/setup.py",
+		"/var/www/html/ejemplo/phpinfo.php"
+	],
+	"find":
+	{
+		"height": 27.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 39.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "Sistema_proyecto.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"registra",
+				"mod_usuario/registrarusuario.php"
+			],
+			[
+				"app.c",
+				"public/css/app.css"
+			],
+			[
+				".env",
+				".env"
+			],
+			[
+				"illumi/router.",
+				"vendor/laravel/framework/src/Illuminate/Routing/Router.php"
+			],
+			[
+				"illuminate/router",
+				"vendor/laravel/framework/src/Illuminate/Routing/Router.php"
+			],
+			[
+				"rout",
+				"vendor/symfony/routing/Route.php"
+			],
+			[
+				"rouer",
+				"vendor/laravel/framework/src/Illuminate/Routing/RouteRegistrar.php"
+			],
+			[
+				"router",
+				"vendor/symfony/routing/Router.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 264.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

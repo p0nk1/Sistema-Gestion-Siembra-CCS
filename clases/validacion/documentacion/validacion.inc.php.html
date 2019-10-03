@@ -1,0 +1,301 @@
+<!doctype html public "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+    <title>PHPXRef 0.6 : Autenticación y Autorización MCI : Vista detallada de validacion.inc.php</title>
+    <link rel="stylesheet" href="sample.css" type="text/css">
+    <link rel="stylesheet" href="sample-print.css" type="text/css" media="print">
+    <style id="highlight" type="text/css"></style>
+    <meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#801800" vlink="#300540" alink="#ffffff">
+<table class="pagetitle" width="100%">
+	<tr>
+        <td valign="top" class="pagetitle">
+            [ <a href="index.html">Indice</a> ]
+        </td>
+        <td align="right" class="pagetitle">
+		    <h2 style="margin-bottom: 0px">Documentaci&oacute;n de  Autenticación y Autorización MCI</h2>
+	    </td>
+    </tr>
+</table>
+
+
+<!-- Generado por PHPXref 0.6 el Tue Jul 26 11:20:35 2005 -->
+<!-- PHPXref (c) 2000-2004 Gareth Watts - gareth@omnipotent.net -->
+<!-- http://phpxref.sourceforge.net/ -->
+
+<script src="phpxref.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+ext='.html';
+relbase='';
+subdir='';
+filename='validacion.inc.php.html';
+cookiekey='default';
+handleNavFrame(relbase, subdir, filename);
+
+// -->
+</script>
+<script language="JavaScript" type="text/javascript">
+if (gwGetCookie('xrefnav')=='off')
+  document.write('<p class="navlinks">[ <a href="javascript:navOn()">Mostrar Explorador<\/a> ]<\/p>');
+else
+  document.write('<p class="navlinks">[ <a href="javascript:navOff()">Esconder Explorador<\/a> ]<\/p>');
+</script>
+<noscript>
+<p class="navlinks">
+[ <a href="nav.html" target="_top">Show Explorer</a> ]
+[ <a href="index.html" target="_top">Hide Navbar</a> ]
+</p>
+</noscript>
+<script language="JavaScript" type="text/javascript">
+<!--
+
+document.writeln('<table align="right" class="searchbox-link"><tr><td><a class="searchbox-link" href="javascript:void(0)" onMouseOver="showSearchBox()">Buscar</a><br>');
+document.writeln('<table border="0" cellspacing="0" cellpadding="0" class="searchbox" id="searchbox">');
+document.writeln('<tr><td class="searchbox-title">');
+document.writeln('<a class="searchbox-title" href="javascript:showSearchPopup()">Historial de Búsquedas +</a>');
+document.writeln('<\/td><\/tr>');
+
+document.writeln('<tr><td class="searchbox-body" id="searchbox-body">');
+document.writeln('<form name="search" style="margin:0px; padding:0px" onSubmit=\'return jump()\'>');
+document.writeln('<a class="searchbox-body" href="_classes/index.html">Clase<\/a>: ');
+document.writeln('<input type="text" size=10 value="" name="classname"><br>');
+document.writeln('<a id="funcsearchlink" class="searchbox-body" href="_functions/index.html">Funcion<\/a>: ');
+document.writeln('<input type="text" size=10 value="" name="funcname"><br>');
+document.writeln('<a class="searchbox-body" href="_variables/index.html">Variable<\/a>: ');
+document.writeln('<input type="text" size=10 value="" name="varname"><br>');
+document.writeln('<a class="searchbox-body" href="_constants/index.html">Constante<\/a>: ');
+document.writeln('<input type="text" size=10 value="" name="constname"><br>');
+document.writeln('<a class="searchbox-body" href="_tables/index.html">Tabla<\/a>: ');
+document.writeln('<input type="text" size=10 value="" name="tablename"><br>');
+document.writeln('<input type="submit" class="searchbox-button" value="Buscar">');
+document.writeln('<\/form>');
+document.writeln('<\/td><\/tr><\/table>');
+document.writeln('<\/td><\/tr><\/table>');
+// -->
+</script>
+<div id="search-popup" class="searchpopup"><p id="searchpopup-title" class="searchpopup-title">title</p><div id="searchpopup-body" class="searchpopup-body">Body</div><p class="searchpopup-close"><a href="javascript:gwCloseActive()">[close]</a></p></div>
+<h2 class="details-heading"><a href="./index.html">/</a> -> <a href="validacion.inc.php.source.html">validacion.inc.php</a> (resumen)</h2>
+<div class="details-summary">
+<p class="viewlinks">[<a href="validacion.inc.php.source.html">Ver Código Fuente</a>]
+[<a href="javascript:window.print();">Imprimir</a>]</p>
+<p><b>(no description)</b></p>
+<table>
+<tr><td align="right">Tamaño del Archivo: </td><td>774 lines (34 kb)</td></tr>
+<tr><td align="right">Incluido o requerido:</td><td>0 veces</td></tr>
+<tr><td align="right" valign="top">Referenciado: </td><td>0 veces</td></tr>
+<tr><td align="right" valign="top">Inclusiones o Requerimientos: </td><td>0 archivos</td></tr>
+</table>
+<h3>Define 1 clase</h3>
+<div class="inset">
+<p><b>MCI_validacion::</b> (13 methods):<br>
+&nbsp;&nbsp;<a href="#mci_validacion">MCI_validacion</a>()<br>
+&nbsp;&nbsp;<a href="#agregar_campo">agregar_campo</a>()<br>
+&nbsp;&nbsp;<a href="#agregar_validacion">agregar_validacion</a>()<br>
+&nbsp;&nbsp;<a href="#agregar_datos">agregar_datos</a>()<br>
+&nbsp;&nbsp;<a href="#procesar">procesar</a>()<br>
+&nbsp;&nbsp;<a href="#_agregar_archivo_js">_agregar_archivo_js</a>()<br>
+&nbsp;&nbsp;<a href="#obtener_archivos_js">obtener_archivos_js</a>()<br>
+&nbsp;&nbsp;<a href="#obtener_js">obtener_js</a>()<br>
+&nbsp;&nbsp;<a href="#obtener_html">obtener_html</a>()<br>
+&nbsp;&nbsp;<a href="#_html_error">_html_error</a>()<br>
+&nbsp;&nbsp;<a href="#html_error">html_error</a>()<br>
+&nbsp;&nbsp;<a href="#campo_oculto">campo_oculto</a>()<br>
+&nbsp;&nbsp;<a href="#_validacion_php">_validacion_php</a>()<br>
+</p>
+</div>
+</div>
+<br><div class="details-funclist">
+<div class="details-classinfo">
+<p class="details-classtitle">Class: <a name="mci_validacion"><b>MCI_validacion</b></a>&nbsp;&nbsp;- <a href="_classes/mci_validacion.html"><small>X-Ref</small></a>
+</p>
+<b>Validación de Formularios<BR>
+</b><br>
+Valida formularios vía JavaScript y PHP.<BR>
+<BR>
+Instrucciones:<BR>
+Para validar un formulario mediante JavaScript y PHP se debe cumplir unos pasos:<BR>
+1) Incluir el archivo que contiene la clase:<BR>
+ej. include &quot;validacion/validacion.inc.php&quot;;<BR>
+<BR>
+2) Inicializar el objeto. Se le pasa como parámetro el nombre del formulario a validar:<BR>
+$validar = new MCI_validacion(&quot;login&quot;);<BR>
+<BR>
+3) Agregar un campo a la clase. El primer parámetro es el nombre del campo de formulario,<BR>
+el segundo es el tipo de campo (text, textarea, select, radio, etc.), y el tercero es el Título<BR>
+del campo (el cual se utiliza para hacerle referencia en el momento de tener que mostrar un error):<BR>
+$validar-&gt;agregar_campo(&quot;user&quot;, &quot;text&quot;, &quot;Nombre de Usuario&quot;);<BR>
+<BR>
+4) Agregar uno o varios tipos de validación para el campo. El primer parámetro es el nombre del campo,<BR>
+el segundo es el tipo de validación (la lista de todos los tipos de validación posibles está guardado<BR>
+en la variable $this-&gt;lista_validacion). El tercer parámetro son las opciones o parámetros que se le<BR>
+pasa al tipo de validación, como por ejemplo un valor en KB mayor el cual será el límite para una<BR>
+validación de tamaño de archivo. El último parámetro es un mensaje de error que suplantará al predeteminado.<BR>
+Los parámetros 2 y 3 son opcionales.<BR>
+$validar-&gt;agregar_validacion(&quot;user&quot;, &quot;req&quot;, NULL, &quot;No metiste datos al campo Usuario&quot;);<BR>
+$validar-&gt;agregar_validacion(&quot;user&quot;, &quot;a1&quot;);<BR>
+$validar-&gt;agregar_validacion(&quot;user&quot;, &quot;! &quot;);<BR>
+<BR>
+5) Se repiten los pasos 3 y 4 tantas veces como sea necesario para agregar todos los campos y sus validaciones.<BR>
+<BR>
+6) Procesar el formulario en caso de que haya sido enviado. Devuelve verdadero si todos los campos son válidos<BR>
+por JavaScript y PHP. Este es el método clave, se le puede utilizar para pasar al proximo paso en el<BR>
+procesado de datos, como por ejemplo su carga a una base de datos.<BR>
+if($validar-&gt;procesar()){die(&quot;Formulario completado exitosamente!!&quot;);}<BR>
+<BR>
+Los próximos pasos son de construcción del html y código JavaScript necesarios para la validación por JavaScript<BR>
+<BR>
+7) Incluir&nbsp;&nbsp;los archivos javascript con las clases de validación. En el caso de no encontrarse en la ubicación<BR>
+predeterminada, se le puede pasar la nueva ubicación como parámetro. Estos archivos se deben incluír antes del<BR>
+formulario, preferiblemente en la sección HEAD del html.<BR>
+&lt;? echo $validar-&gt;obtener_archivos_js(&quot;validacion/js/&quot;); ?&gt;<BR>
+<BR>
+8) Incluír el texto de error. Este texto cambiará dinámicamente de acuerdo al error en la validación que se presente.<BR>
+En el caso de haber varios formularios y que se quiera tener igual número de mensajes de error, se puede pasar<BR>
+el nombre del formulario al cual estará asociado como parámetro.<BR>
+&lt;?php echo&nbsp;&nbsp;$validar-&gt;html_error(&quot;login&quot;); ?&gt;<BR>
+<BR>
+9) Incluír el campo oculto. Se utiliza este método para crear un campo oculto que le indica al método procesar si el<BR>
+formulario ha sido enviado por el usuario o no, para así determinar si debe realizar la validación por PHP.<BR>
+Se debe llamar este método desde adentro del formulario. Es decir, entre los campos &lt;form&gt; y &lt;/form&gt;.<BR>
+&lt;?php echo&nbsp;&nbsp;$validar-&gt;campo_oculto(); ?&gt;<BR>
+<BR>
+10) Incluír JavaScript de validación. Es importante que se coloque este llamado después del formulario, es decir<BR>
+después del tag &lt;/form&gt; para que funcione correctamente. Esto se debe a que el JavaScript de validación trabaja<BR>
+con objetos y debe estar completo el objeto del formulario antes de poderle hacer referencia.<BR>
+&lt;?php echo $validar-&gt;obtener_js(); ?&gt;<BR>
+<BR>
+<div class="inset"><table border="0" width="80%" class="funcinfo"><tr class="funcinfo-title"><td>
+<a name="mci_validacion" onClick="logFunction('mci_validacion', 'validacion.inc.php.source.html#l96')" href="validacion.inc.php.source.html#l96">MCI_validacion</a>(<a href="_variables/nom_form.html">$nom_form</a>, <a href="_variables/metodo_form.html">$metodo_form</a> = &quot;POST&quot;)&nbsp;&nbsp;
+<a href="_functions/mci_validacion.html"><small>X-Ref</small></a>
+</td></tr><tr class="funcinfo-body"><td><b>Constructor<BR>
+</b><BR>Constructor. Recibe como parámetros el nombre del formulario y el método de envío del formulario<BR>
+</td></tr></table>
+
+<br>
+<table border="0" width="80%" class="funcinfo"><tr class="funcinfo-title"><td>
+<a name="agregar_campo" onClick="logFunction('agregar_campo', 'validacion.inc.php.source.html#l106')" href="validacion.inc.php.source.html#l106">agregar_campo</a>(<a href="_variables/id_campo.html">$id_campo</a>, <a href="_variables/tipo_campo.html">$tipo_campo</a>, <a href="_variables/titulo.html">$titulo</a> = NULL, <a href="_variables/argumentos.html">$argumentos</a> = NULL)&nbsp;&nbsp;
+<a href="_functions/agregar_campo.html"><small>X-Ref</small></a>
+</td></tr><tr class="funcinfo-body"><td><b>Agregar un campo<BR>
+</b><BR>Agregar un nuevo campo al formulario. El id_campo define el id y el nombre cuando se crea<BR>
+la tabla. El tipo_campo es el nombre del tipo de campo (text, textarea, button, checkbox, radio, etc).<BR>
+El título es para efecto de mensajes de error y los argumentos son para el formateo del campo.<BR>
+</td></tr></table>
+
+<br>
+<table border="0" width="80%" class="funcinfo"><tr class="funcinfo-title"><td>
+<a name="agregar_validacion" onClick="logFunction('agregar_validacion', 'validacion.inc.php.source.html#l119')" href="validacion.inc.php.source.html#l119">agregar_validacion</a>(<a href="_variables/id_campo.html">$id_campo</a>, <a href="_variables/tipo_validacion.html">$tipo_validacion</a>, <a href="_variables/argumentos.html">$argumentos</a> = NULL, <a href="_variables/texto_error.html">$texto_error</a> = NULL)&nbsp;&nbsp;
+<a href="_functions/agregar_validacion.html"><small>X-Ref</small></a>
+</td></tr><tr class="funcinfo-body"><td><b>Agregar una validación<BR>
+</b><BR>Agregar una validación a cierto campo. El primer parámetro es el nombre del campo,<BR>
+el segundo es el tipo de validación (la lista de todos los tipos de validación posibles está guardado<BR>
+en la variable $this-&gt;lista_validacion). El tercer parámetro son las opciones o parámetros que se le<BR>
+pasa al tipo de validación, como por ejemplo un valor en KB mayor el cual será el límite para una<BR>
+validación de tamaño de archivo. El último parámetro es un mensaje de error que suplantará al predeteminado.<BR>
+</td></tr></table>
+
+<br>
+<table border="0" width="80%" class="funcinfo"><tr class="funcinfo-title"><td>
+<a name="agregar_datos" onClick="logFunction('agregar_datos', 'validacion.inc.php.source.html#l140')" href="validacion.inc.php.source.html#l140">agregar_datos</a>(<a href="_variables/id_campo.html">$id_campo</a>, <a href="_variables/datos.html">$datos</a>)&nbsp;&nbsp;
+<a href="_functions/agregar_datos.html"><small>X-Ref</small></a>
+</td></tr><tr class="funcinfo-body"><td><b>Agregar Datos<BR>
+</b><BR>Agregar datos a un campo del formulario. Recibe como parámetros el id del campo, y los datos que<BR>
+se desea que muestre de manera predeterminada en el formulario. Si se trata de un list o radio,<BR>
+el parámetro debe ser un array.<BR>
+</td></tr></table>
+
+<br>
+<table border="0" width="80%" class="funcinfo"><tr class="funcinfo-title"><td>
+<a name="procesar" onClick="logFunction('procesar', 'validacion.inc.php.source.html#l151')" href="validacion.inc.php.source.html#l151">procesar</a>(<a href="_variables/usar_session.html">$usar_session</a>=0)&nbsp;&nbsp;
+<a href="_functions/procesar.html"><small>X-Ref</small></a>
+</td></tr><tr class="funcinfo-body"><td><b>Procesar<BR>
+</b><BR>Se llama esta función para determinar si ya se recibieron los datos enviados por el usuario y<BR>
+si cumple con todos los parámetros de validación. De ser cierto, devuelve true.<BR>
+</td></tr></table>
+
+<br>
+<table border="0" width="80%" class="funcinfo"><tr class="funcinfo-title"><td>
+<a name="_agregar_archivo_js" onClick="logFunction('_agregar_archivo_js', 'validacion.inc.php.source.html#l195')" href="validacion.inc.php.source.html#l195">_agregar_archivo_js</a>(<a href="_variables/nom_archivo.html">$nom_archivo</a>)&nbsp;&nbsp;
+<a href="_functions/_agregar_archivo_js.html"><small>X-Ref</small></a>
+</td></tr><tr class="funcinfo-body"><td><b>Agregar archivo js<BR>
+</b><BR>Agregar un archivo js a la lista para luego incluír<BR>
+</td></tr></table>
+
+<br>
+<table border="0" width="80%" class="funcinfo"><tr class="funcinfo-title"><td>
+<a name="obtener_archivos_js" onClick="logFunction('obtener_archivos_js', 'validacion.inc.php.source.html#l204')" href="validacion.inc.php.source.html#l204">obtener_archivos_js</a>(<a href="_variables/ruta.html">$ruta</a>=&quot;js/&quot;)&nbsp;&nbsp;
+<a href="_functions/obtener_archivos_js.html"><small>X-Ref</small></a>
+</td></tr><tr class="funcinfo-body"><td><b>Incluir Archivo JS<BR>
+</b><BR>Obtener el Javascript necesario para la validación.&nbsp;&nbsp;En el caso de no encontrarse en la ubicación<BR>
+predeterminada, se le puede pasar la nueva ubicación como parámetro. Estos archivos se deben incluír antes del<BR>
+formulario, preferiblemente en la sección HEAD del html.<BR>
+</td></tr></table>
+
+<br>
+<table border="0" width="80%" class="funcinfo"><tr class="funcinfo-title"><td>
+<a name="obtener_js" onClick="logFunction('obtener_js', 'validacion.inc.php.source.html#l220')" href="validacion.inc.php.source.html#l220">obtener_js</a>()&nbsp;&nbsp;
+<a href="_functions/obtener_js.html"><small>X-Ref</small></a>
+</td></tr><tr class="funcinfo-body"><td><b>Construir Javascript<BR>
+</b><BR>Obtener el Javascript necesario para la validación. Este texto cambiará dinámicamente de acuerdo al error<BR>
+en la validación que se presente.<BR>
+En el caso de haber varios formularios y que se quiera tener igual número de mensajes de error, se puede pasar<BR>
+el nombre del formulario al cual estará asociado como parámetro.<BR>
+</td></tr></table>
+
+<br>
+<table border="0" width="80%" class="funcinfo"><tr class="funcinfo-title"><td>
+<a name="obtener_html" onClick="logFunction('obtener_html', 'validacion.inc.php.source.html#l266')" href="validacion.inc.php.source.html#l266">obtener_html</a>(&amp;<a href="_variables/objeto_html.html">$objeto_html</a>)&nbsp;&nbsp;
+<a href="_functions/obtener_html.html"><small>X-Ref</small></a>
+</td></tr><tr class="funcinfo-body"><td><b>Construir HTML<BR>
+</b><BR>Construir el formulario dinámicamente utilizando un objeto de creación de html el cual se le pasa como parámetro.<BR>
+</td></tr></table>
+
+<br>
+<table border="0" width="80%" class="funcinfo"><tr class="funcinfo-title"><td>
+<a name="_html_error" onClick="logFunction('_html_error', 'validacion.inc.php.source.html#l275')" href="validacion.inc.php.source.html#l275">_html_error</a>(<a href="_variables/texto.html">$texto</a>, <a href="_variables/style.html">$style</a> = &quot;color: )&nbsp;&nbsp;
+<a href="_functions/_html_error.html"><small>X-Ref</small></a>
+</td></tr><tr class="funcinfo-body"><td><b>_HTML Error<BR>
+</b><BR>Devuelve el texto con formato rojo y bold<BR>
+</td></tr></table>
+
+<br>
+<table border="0" width="80%" class="funcinfo"><tr class="funcinfo-title"><td>
+<a name="html_error" onClick="logFunction('html_error', 'validacion.inc.php.source.html#l284')" href="validacion.inc.php.source.html#l284">html_error</a>(<a href="_variables/nom_form.html">$nom_form</a> = NULL)&nbsp;&nbsp;
+<a href="_functions/html_error.html"><small>X-Ref</small></a>
+</td></tr><tr class="funcinfo-body"><td><b>HTML Error<BR>
+</b><BR>Devuelve el div que se requiere para mostrar el mensaje de error si se elige<BR>
+mostrar el error en este formato.&nbsp;&nbsp;EL texto cambiará dinámicamente de acuerdo al error en la validación que se presente.<BR>
+En el caso de haber varios formularios y que se quiera tener igual número de mensajes de error, se puede pasar<BR>
+el nombre del formulario al cual estará asociado como parámetro.<BR>
+</td></tr></table>
+
+<br>
+<table border="0" width="80%" class="funcinfo"><tr class="funcinfo-title"><td>
+<a name="campo_oculto" onClick="logFunction('campo_oculto', 'validacion.inc.php.source.html#l317')" href="validacion.inc.php.source.html#l317">campo_oculto</a>()&nbsp;&nbsp;
+<a href="_functions/campo_oculto.html"><small>X-Ref</small></a>
+</td></tr><tr class="funcinfo-body"><td><b>Campo Oculto<BR>
+</b><BR>Se utiliza este método para crear un campo oculto que le indica al método procesar si el<BR>
+formulario ha sido enviado por el usuario o no, para así determinar si debe realizar la<BR>
+validación por PHP.<BR>
+</td></tr></table>
+
+<br>
+<table border="0" width="80%" class="funcinfo"><tr class="funcinfo-title"><td>
+<a name="_validacion_php" onClick="logFunction('_validacion_php', 'validacion.inc.php.source.html#l328')" href="validacion.inc.php.source.html#l328">_validacion_php</a>()&nbsp;&nbsp;
+<a href="_functions/_validacion_php.html"><small>X-Ref</small></a>
+</td></tr><tr class="funcinfo-body"><td><b>Validar formulario mediante PHP<BR>
+</b><BR>Devuelve verdadero si se valida correctamente los datos enviados por el formulario<BR>
+</td></tr></table>
+
+<br>
+</div>
+</div>
+
+</div>
+<br><hr>
+<table width="100%">
+	<tr><td>Generado: Tue Jul 26 11:20:35 2005</td>
+	</tr>
+</table>
+</body></html>

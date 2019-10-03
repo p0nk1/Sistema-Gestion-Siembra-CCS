@@ -1,0 +1,38 @@
+/*
+// HTML source written by Cory Dorning
+// Visit www.corydorning.com/blog/jquery-faqs-scroll-and-highlight-tutorial
+// for original source code and tutorial
+*/
+
+@charset "utf-8";
+
+
+	#accordion {
+		border: 0px solid #ccc;
+		border-bottom: none;
+		margin: 0 auto;
+		width: 1050x;
+	}
+
+	#accordion .section {
+		background: url(images/accordion-bg.gif) repeat-x 0 0;
+		border-bottom: 1px solid #ccc;
+		padding: 5px;
+	}	
+	
+	#accordion h2 {
+		background: url(images/plus.png) no-repeat 0 4px;
+		cursor: pointer;
+		font-size: 12px;
+		color: #8E080A;  /*#8E080A  #cc3300*/
+		outline: none;
+		padding-left: 18px;
+	}
+	
+	#accordion .ui-state-active {
+		background: url(images/minus.png) no-repeat 0 4px;
+	}
+	
+	#accordion .section-content {
+		padding: 0 10px;
+	}

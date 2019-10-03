@@ -1,0 +1,774 @@
+<?php 
+/**
+* Validación de Formularios
+* 
+* Valida formularios vía JavaScript y PHP. 
+* 
+* Instrucciones:
+* Para validar un formulario mediante JavaScript y PHP se debe cumplir unos pasos:
+* 1) Incluir el archivo que contiene la clase:
+* ej. include "validacion/validacion.inc.php";
+* 
+* 2) Inicializar el objeto. Se le pasa como parámetro el nombre del formulario a validar:
+* $validar = new MCI_validacion("login");
+* 
+* 3) Agregar un campo a la clase. El primer parámetro es el nombre del campo de formulario,
+* el segundo es el tipo de campo (text, textarea, select, radio, etc.), y el tercero es el Título
+* del campo (el cual se utiliza para hacerle referencia en el momento de tener que mostrar un error):
+* $validar->agregar_campo("user", "text", "Nombre de Usuario");
+* 
+* 4) Agregar uno o varios tipos de validación para el campo. El primer parámetro es el nombre del campo,
+* el segundo es el tipo de validación (la lista de todos los tipos de validación posibles está guardado
+* en la variable $this->lista_validacion). El tercer parámetro son las opciones o parámetros que se le
+* pasa al tipo de validación, como por ejemplo un valor en KB mayor el cual será el límite para una 
+* validación de tamaño de archivo. El último parámetro es un mensaje de error que suplantará al predeteminado.
+* Los parámetros 2 y 3 son opcionales.
+* $validar->agregar_validacion("user", "req", NULL, "No metiste datos al campo Usuario");
+* $validar->agregar_validacion("user", "a1");
+* $validar->agregar_validacion("user", "! ");
+* 
+* 5) Se repiten los pasos 3 y 4 tantas veces como sea necesario para agregar todos los campos y sus validaciones.
+* 
+* 6) Procesar el formulario en caso de que haya sido enviado. Devuelve verdadero si todos los campos son válidos
+* por JavaScript y PHP. Este es el método clave, se le puede utilizar para pasar al proximo paso en el 
+* procesado de datos, como por ejemplo su carga a una base de datos.
+* if($validar->procesar()){die("Formulario completado exitosamente!!");}
+* 
+* Los próximos pasos son de construcción del html y código JavaScript necesarios para la validación por JavaScript
+* 
+* 7) Incluir  los archivos javascript con las clases de validación. En el caso de no encontrarse en la ubicación 
+* predeterminada, se le puede pasar la nueva ubicación como parámetro. Estos archivos se deben incluír antes del 
+* formulario, preferiblemente en la sección HEAD del html.
+* <? echo $validar->obtener_archivos_js("validacion/js/"); ?>
+* 
+* 8) Incluír el texto de error. Este texto cambiará dinámicamente de acuerdo al error en la validación que se presente.
+* En el caso de haber varios formularios y que se quiera tener igual número de mensajes de error, se puede pasar
+* el nombre del formulario al cual estará asociado como parámetro.
+* <?php echo  $validar->html_error("login"); ?>
+* 
+* 9) Incluír el campo oculto. Se utiliza este método para crear un campo oculto que le indica al método procesar si el 
+* formulario ha sido enviado por el usuario o no, para así determinar si debe realizar la validación por PHP.
+* Se debe llamar este método desde adentro del formulario. Es decir, entre los campos <form> y </form>.
+* <?php echo  $validar->campo_oculto(); ?>
+* 
+* 10) Incluír JavaScript de validación. Es importante que se coloque este llamado después del formulario, es decir
+* después del tag </form> para que funcione correctamente. Esto se debe a que el JavaScript de validación trabaja 
+* con objetos y debe estar completo el objeto del formulario antes de poderle hacer referencia.
+* <?php echo $validar->obtener_js(); ?>
+*
+* @Autor Thomas Woodard
+*/
+class MCI_validacion{
+var $nom_form = NULL;
+var $metodo_form = NULL;
+var $validacion_paso = NULL;
+var $validacion_error = NULL;
+var $campos = NULL;
+var $valido_php = NULL;
+var $codigo_javascript = NULL;
+var $archivos_js = array();
+var $codigo_js = NULL;
+var $url_archivo_js = NULL;
+var $lista_validacion = array( // listar acá cualquier nueva función de validación. Los alias de una validación van en la mísma línea
+"req", "requerido", // campo requerido
+"maxlongitud", "maxlon", // longitud máxima
+"minlongitud", "minlon", // longitud mínima
+"a1", "alnum", "alfanumerico", // números y letras solamente
+"1", "num", "numerico", // números solamente
+"a", "alfabetico", "alfa", // letras solamente
+"a1-_", "a1-", "alnumguion", // números, letras, guión y underscore
+"email", // validar email
+"<", "menorque", // que el valor sea menor que cierto número
+">", "mayorque", // que un valor sea mayor que cierto número
+"regexp", // comparar con una expresión regular provista como argumento
+"noseleccionar", "lista", "!=",// verificar que el valor de un item de select no esté en su valor predeterminado
+"=", "camposiguales", // que un campo tenga el mismo valor que otro
+"fechaformato", "ff", // que la fecha observe el formato dd/mm/aaaa o dd-mm-aaaa
+"f>", "fecha >", // que la fecha sea posterior a otra, ya sea pasada por parámetro u otro campo
+"f<", "fecha <", // que la fecha sea posterior a otra, ya sea pasada por parámetro u otro campo
+"noespacio", "! ", // que no posea espacios en blanco
+".?","extensionarchivo", // que el archivo a subir sea de cierta extensión... imágenes por defecto... 
+						// para probar otros tipos de archivo se pasa en el parámetro una lista de las extensiones, 
+						// separadas por una coma ej. gif,jpg,jpeg,bmp,png
+"KB","tamañoarchivo", // verifica el que el tamaño del archivo sea el correcto. No hay equivalente de JavaScript
+"forzar" // forzar un error. Se debe especificar un mensaje de error
+);
+	/**
+	* Constructor
+	* 
+	* Constructor. Recibe como parámetros el nombre del formulario y el método de envío del formulario
+	* @Autor Thomas Woodard
+	*/
+	function MCI_validacion($nom_form, $metodo_form = "POST"){ 
+		$this->nom_form = $nom_form;
+		$this->metodo_form = $metodo_form;
+	}
+	/**
+	* Agregar un campo
+	* 
+	* Agregar un nuevo campo al formulario. El id_campo define el id y el nombre cuando se crea
+	* la tabla. El tipo_campo es el nombre del tipo de campo (text, textarea, button, checkbox, radio, etc). 
+	* El título es para efecto de mensajes de error y los argumentos son para el formateo del campo.
+	* @Autor Thomas Woodard
+	*/
+	function agregar_campo($id_campo, $tipo_campo, $titulo = NULL, $argumentos = NULL){
+		$this->campos[$id_campo]["tipo"] = $tipo_campo;
+		$this->campos[$id_campo]["args"] = $argumentos;
+		$this->campos[$id_campo]["titulo"] = $titulo;
+	}
+	/**
+	* Agregar una validación
+	* 
+	* Agregar una validación a cierto campo. El primer parámetro es el nombre del campo,
+	* el segundo es el tipo de validación (la lista de todos los tipos de validación posibles está guardado
+	* en la variable $this->lista_validacion). El tercer parámetro son las opciones o parámetros que se le
+	* pasa al tipo de validación, como por ejemplo un valor en KB mayor el cual será el límite para una 
+	* validación de tamaño de archivo. El último parámetro es un mensaje de error que suplantará al predeteminado.
+	* @Autor Thomas Woodard
+	*/
+	function agregar_validacion($id_campo, $tipo_validacion, $argumentos = NULL, $texto_error = NULL){
+		if(in_array($tipo_validacion, $this->lista_validacion)){
+			$this->campos[$id_campo]["val"][] = $tipo_validacion;
+			$this->campos[$id_campo]["val_args"][] = $argumentos;
+			$this->campos[$id_campo]["error"][] = $texto_error;
+			$this->archivos_js["mci_validacion.js"] = 1;
+		} else {
+		    $this->validacion_campo_error = $id_campo;
+			$this->validacion_error = "DEPURAR: El tipo de validación $tipo_validacion no existe.";
+		}
+	}
+	/**
+	* Agregar Datos
+	* 
+	* Agregar datos a un campo del formulario. Recibe como parámetros el id del campo, y los datos que
+	* se desea que muestre de manera predeterminada en el formulario. Si se trata de un list o radio,
+	* el parámetro debe ser un array.
+	* @Autor Thomas Woodard
+	*/
+	function agregar_datos($id_campo, $datos){
+		
+	}
+	/**
+	* Procesar
+	* 
+	* Se llama esta función para determinar si ya se recibieron los datos enviados por el usuario y 
+	* si cumple con todos los parámetros de validación. De ser cierto, devuelve true.
+	* @Autor Thomas Woodard
+	*/
+	function procesar($usar_session=0){
+		if ($usar_session == 1){//todavía no se puede usar esta opción
+			// Esta código debe ser después de todos los cambios que se le hagan al objeto
+			@session_start();
+			if($_SESSION["MCI_validacion"][$this->nom_form]->validacion_paso != 1){
+				$this->validacion_paso = 1;
+				$_SESSION["MCI_validacion"][$this->nom_form] = $this;
+			} else {}
+		}else{
+			switch($this->metodo_form){
+				case "POST":
+					if (isset($_POST["MCI_validar"]) && $_POST["MCI_validar"] == $this->nom_form){
+						foreach($_POST as $campo => $valor){
+							$this->campos[$campo]["valor"] = $valor;
+							$this->validacion_paso = 2;
+						}
+					}
+					break;
+				case "GET":
+					if (isset($_GET["MCI_validar"]) && $_GET["MCI_validar"]==$this->nom_form){
+						foreach($_GET as $campo => $valor){
+							$this->campos[$campo]["valor"] = $valor;
+							$this->validacion_paso = 2;
+						}
+					}
+					break;
+			}
+			if (isset($_POST["MCI_validar"]) && $_POST["MCI_validar"] == $this->nom_form){
+						foreach($_FILES as $campo => $campo_datos_archivo){
+							$this->campos[$campo]["valor"] = $campo_datos_archivo['name'];
+							$this->campos[$campo]["archivo"] = $campo_datos_archivo;
+							$this->validacion_paso = 2;
+						}
+			}
+		}
+		if($this->validacion_paso == 2){return $this->_validacion_php();}
+	}	
+	/**
+	* Agregar archivo js
+	* 
+	* Agregar un archivo js a la lista para luego incluír
+	* @Autor Thomas Woodard
+	*/
+	function _agregar_archivo_js($nom_archivo){
+		array_push($this->archivos_js,$nom_archivo);
+	}
+	/**
+	* Incluir Archivo JS
+	* 
+	* Obtener el Javascript necesario para la validación.  En el caso de no encontrarse en la ubicación 
+	* predeterminada, se le puede pasar la nueva ubicación como parámetro. Estos archivos se deben incluír antes del 
+	* formulario, preferiblemente en la sección HEAD del html.
+	* @Autor Thomas Woodard
+	*/
+	function obtener_archivos_js($ruta="js/"){
+	$this->url_archivo_js = $ruta;
+	$retorno = ""; 
+		foreach ($this->archivos_js as $archivo => $instanciado){
+			$retorno .= "<script language='JavaScript' src='$ruta$archivo' type='text/javascript'></script>\n";
+		}
+		return $retorno;
+	}
+	/**
+	* Construir Javascript
+	* 
+	* Obtener el Javascript necesario para la validación. Este texto cambiará dinámicamente de acuerdo al error 
+	* en la validación que se presente.
+	* En el caso de haber varios formularios y que se quiera tener igual número de mensajes de error, se puede pasar
+	* el nombre del formulario al cual estará asociado como parámetro.
+	* @Autor Thomas Woodard
+	*/
+	function obtener_js(){
+		foreach ($this->campos as $clave_campo => $campo){
+			foreach($campo["val"] as $clave => $val){
+			    $nom_campo = $clave_campo; 
+				$this->codigo_js .= "frmvalidator.addValidation('$nom_campo','$val";
+				if ($campo["val_args"][$clave]||$campo["val_args"][$clave]==='0'){
+					$this->codigo_js .="=".$campo["val_args"][$clave];				
+				}
+				$this->codigo_js .= "'"; 
+				if ($campo["error"][$clave]){
+					$this->codigo_js .=" ,'".$campo["error"][$clave]."'";
+				}
+				$this->codigo_js .= ");\n";				
+			}
+		}
+		$retornar = "
+		<script language='JavaScript' type='text/javascript'>
+		  var frmvalidator  = new Validator('".$this->nom_form."');\n";
+		$retornar .= $this->codigo_js;
+		$retornar .= "document.".$this->nom_form.".urlImgWar= '".$this->url_archivo_js."img/'\n";
+		if($this->validacion_error){
+			$nom_objeto = "document.".$this->nom_form.".".$this->validacion_campo_error;
+			$retornar .= "mostrar_error('".$this->validacion_error."', '".$this->nom_form."'); $nom_objeto.focus();"
+			."	
+				$nom_objeto.oldStyle = $nom_objeto.style;
+				$nom_objeto.style.backgroundColor = '#FFFCE2';
+				$nom_objeto.style.borderColor = 'red';
+				$nom_objeto.style.backgroundImage = 'url('+document.".$this->nom_form.".urlImgWar+'warning_obj.gif)';
+				$nom_objeto.style.backgroundPosition = 'right';
+				$nom_objeto.style.backgroundRepeat =  'no-repeat';
+			";
+		}
+		$retornar .="
+		</script>
+		";
+		return $retornar;
+	}
+	/**
+	* Construir HTML
+	* 
+	* Construir el formulario dinámicamente utilizando un objeto de creación de html el cual se le pasa como parámetro.
+	* @Autor Thomas Woodard
+	*/
+	function obtener_html(&$objeto_html){
+		
+	}	
+	/**
+	* _HTML Error
+	* 
+	* Devuelve el texto con formato rojo y bold
+	* @Autor Thomas Woodard
+	*/	
+	function _html_error($texto, $style = "color: #FF0000; font-weight: bold;"){
+		return '<span style="'.$style.'">'.$texto.'</span>';
+	}
+	/**
+	* HTML Error
+	* 
+	* Devuelve el div que se requiere para mostrar el mensaje de error si se elige
+	* mostrar el error en este formato.  EL texto cambiará dinámicamente de acuerdo al error en la validación que se presente.
+	* En el caso de haber varios formularios y que se quiera tener igual número de mensajes de error, se puede pasar
+	* el nombre del formulario al cual estará asociado como parámetro.
+	* @Autor Thomas Woodard
+	*/
+	function html_error($nom_form = NULL){
+		if($nom_form){
+			$retorno = '<div id="dcontent_'.$nom_form.'" style="width:100%;"></div>
+				<ilayer id="ns4dcontent_'.$nom_form.'" width="100%" height="22">
+					<layer id="ns4dcontent2_'.$nom_form.'" width="100%" height="21"></layer>
+				</ilayer>';
+			if($this->validacion_error){
+				$retorno .= "
+				<noscript>".$this->validacion_error."</noscript><br>
+				";
+			}
+		}else{
+			$retorno = '<div id="dcontent" style="width:100%;"></div>
+				<ilayer id="ns4dcontent" width="100%" height="22">
+					<layer id="ns4dcontent2" width="100%" height="21"></layer>
+				</ilayer>';
+			if($this->validacion_error){
+				$retorno .= "
+				<noscript>".$this->validacion_error."</noscript><br>
+				";
+			}
+		}
+		return $retorno;
+	}
+	/**
+	* Campo Oculto
+	* 
+	* Se utiliza este método para crear un campo oculto que le indica al método procesar si el 
+	* formulario ha sido enviado por el usuario o no, para así determinar si debe realizar la 
+	* validación por PHP.
+	* @Autor Thomas Woodard
+	*/	
+	function campo_oculto(){
+		return "<input type='hidden' id='MCI_validar' name='MCI_validar' value='".$this->nom_form."' />";
+	}	
+	/**
+	* Validar formulario mediante PHP
+	* 
+	* Devuelve verdadero si se valida correctamente los datos enviados por el formulario
+	* @Autor Thomas Woodard
+	*/	
+	function _validacion_php(){
+		foreach ($this->campos as $id_campo => $campo){ // cada campo
+			foreach($campo["val"] as $clave => $val){ // cada validación del campo
+				if($campo["titulo"]!=NULL){$nombre = $campo["titulo"];}else{$nombre = $id_campo;}
+				switch ($val){
+					case "r":
+					case "req":
+						if(!isset($campo["valor"]) || $campo["valor"] == ""){
+							if($campo["error"][$clave]){
+								$this->validacion_error = $campo["error"][$clave];
+							} else $this->validacion_error = $nombre. " es un campo requerido"; 
+							$this->validacion_campo_error = $id_campo;
+							return false;
+						}
+						break;
+					case "maxl": 
+					case "maxlon": 
+						if(isset($campo["valor"]) && $campo["valor"] != ""){ // se verifica que se haya ingresado un valor para evitar errores
+							if(strlen($campo["valor"]) > $campo["val_args"][$clave]){ 
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = $nombre. " debe tener no más de ".$campo["val_args"][$clave]." caracteres "; 
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+						}						
+						break;
+					case "minl":
+					case "minlon":
+						if(isset($campo["valor"]) && $campo["valor"] != ""){
+							if(strlen($campo["valor"]) < $campo["val_args"][$clave]){ 
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = $nombre. " debe tener almenos ".$campo["val_args"][$clave]." caracteres "; 
+								$this->validacion_campo_error = $id_campo;
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+						}
+						break;
+					case "noespacio": 
+					case "! ":
+						if(isset($campo["valor"]) && $campo["valor"] != ""){
+							if(ereg_replace(" ", "", $campo["valor"]) != $campo["valor"]){
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = $nombre. " no debe poseer espacios en blanco "; 
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+						}
+						break;
+					case "a1":
+					case "alfanumerico":
+						if(isset($campo["valor"]) && $campo["valor"] != ""){
+							if(ereg_replace("[^a-zA-z0-9 ]", "", $campo["valor"]) != $campo["valor"]){
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = $nombre. " solamente debe tener caracteres alfa-numéricos "; 
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+						}
+						break;
+					case "1":
+					case "num":
+					case "numerico": 
+						if(isset($campo["valor"]) && $campo["valor"] != ""){
+							if(ereg_replace("[^0-9 ]", "", $campo["valor"]) != $campo["valor"]){
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = $nombre. " solamente debe tener caracteres numéricos "; 
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+						}
+						break;
+					case "a":
+					case "alfa":
+					case "alfabetico":
+						if(isset($campo["valor"]) && $campo["valor"] != ""){
+							if(ereg_replace("[^a-zA-z ]", "", $campo["valor"]) != $campo["valor"]){
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = $nombre. " solamente debe tener caracteres alfabéticos "; 
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+						}
+						break;
+					case "a1-":
+					case "a1-_":
+					case "alnumguion":
+						if(isset($campo["valor"]) && $campo["valor"] != ""){
+							if(ereg_replace("[^a-zA-z0-9._- ]", "", $campo["valor"]) != $campo["valor"]){
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = $nombre. " debe incluir solamente los caracteres A-Z,a-z,0-9,- y _"; 
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+						}
+						break;
+					case "email": 
+						if(isset($campo["valor"]) && $campo["valor"] != ""){
+							$pattern = "/^[A-z0-9_\-]+\@(A-z0-9_-]+\.)+[A-z]{2,4}$/";
+							if(!preg_match($pattern,$campo["valor"])){
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = "Debe ingresar un email válido ";
+							}
+							if (strlen($this->email)>100){
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = "El correo electrónico es demasiado largo";
+							}
+							
+						}
+						break;
+					case "<":
+					case "menorque":
+						if(isset($campo["valor"]) && $campo["valor"] != ""){
+							if(ereg_replace("[^0-9]", "", $campo["valor"]) != $campo["valor"]){
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = $nombre. " solamente debe tener caracteres numéricos "; 
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+							if($campo["valor"] > $campo["val_args"][$clave]){
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = "El valor de ". $nombre ." debe ser menor que ". $campo["val_args"][$clave];
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+						}
+						break;
+					case ">":
+					case "mayorque":
+						if(isset($campo["valor"]) && $campo["valor"] != ""){
+							if(ereg_replace("[^0-9]", "", $campo["valor"]) != $campo["valor"]){
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = $nombre. " solamente debe tener caracteres numéricos "; 
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+							if($campo["valor"] < $campo["val_args"][$clave]){
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = "El valor de ". $nombre ." debe ser mayor que ". $campo["val_args"][$clave];
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+						}
+						break;
+					case "regexp":
+						if(isset($campo["valor"]) && $campo["valor"] != ""){
+							if(!preg_match($campo["val_args"][$clave],$campo["valor"])){
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = "El formato de ". $nombre ." no es el correcto ";
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+						}
+						break;
+					case "lista":
+					case "!=":
+					case "noseleccionar":
+						if(isset($campo["valor"]) && $campo["valor"] != ""){
+							if($campo["val_args"][$clave]){$noseleccion = $campo["val_args"][$clave];}else{$noseleccion = '0';}
+							if($campo["valor"]==$noseleccion){
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = "Debe seleccionar una opción de ". $nombre ;
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+						}
+						break;
+					case "=":
+					case "camposiguales":
+						if(isset($campo["valor"]) && $campo["valor"] != ""){
+							$campo_comparacion = $campo["val_args"][$clave];
+							if(!$this->campos[$campo_comparacion]["valor"]){
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = "Depurar: el campo $campo_comparacion no existe ";
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+							if($this->campos[$campo_comparacion]["titulo"]!=NULL){
+								$nombre_comparacion = $this->campos[$campo_comparacion]["titulo"];
+							}else{
+								$nombre_comparacion = $campo_comparacion;
+							}
+							if($campo["valor"] != $this->campos[$campo_comparacion]["valor"]){
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = "El campo ". $nombre. " debe ser igual al campo ".$campo_comparacion ;
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+						}
+						break;
+					case "forzar":
+						if($campo["error"][$clave]){
+							$this->validacion_error = $campo["error"][$clave];
+						} else $this->validacion_error = "DEPURAR: debe especificar un mensaje de error para ".$nombre;
+							$this->validacion_campo_error = $id_campo;
+								return false;
+						break;
+					case "fechaformato":
+					case "ff":
+						if(isset($campo["valor"]) && $campo["valor"] != ""){
+							$tipoDelimitador = false;
+							if(strstr($campo["valor"],"/")) $tipoDelimitador="/";
+							if(strstr($campo["valor"],"-")) $tipoDelimitador="-";
+							if($tipoDelimitador){
+								$fecha_array = explode($tipoDelimitador,$campo["valor"]);
+								$dteDate = strtotime($fecha_array[2]."-".$fecha_array[1]."-".$fecha_array[0]);
+								if(
+									(date("d", $dteDate) == $fecha_array[0] || date("j", $dteDate) == $fecha_array[0]) &&
+									(date("m", $dteDate) == $fecha_array[1] || date("n", $dteDate) == $fecha_array[1]) &&
+									 date("Y", $dteDate) == $fecha_array[2]
+								   )
+								{} else {
+									if($campo["error"][$clave]){
+										$this->validacion_error = $campo["error"][$clave];
+									} else $this->validacion_error = "El campo ".$nombre." debe estar en el formato dd/mm/aaaa (día/mes/año) ";
+									$this->validacion_campo_error = $id_campo;
+									return false;
+								}
+							} else {
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = "El campo ".$nombre." debe estar en el formato dd/mm/aaaa (día/mes/año) ";
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+						}
+						break;
+					case "f>":
+					case "fecha >":
+						if(isset($campo["valor"]) && $campo["valor"] != ""){
+							$tipoDelimitador = false;
+							if(strstr($campo["valor"],"/")) $tipoDelimitador="/";
+							if(strstr($campo["valor"],"-")) $tipoDelimitador="-";
+							$fecha_array = explode($tipoDelimitador,$campo["valor"]);
+							$faValidar = strtotime($fecha_array[2]."-".$fecha_array[1]."-".$fecha_array[0]);
+							// parsear el parámetro pasado a la función
+							$tipoDelimitador = false;
+							if(strstr($campo["val_args"][$clave],"/")) $tipoDelimitador="/";
+							if(strstr($campo["val_args"][$clave],"-")) $tipoDelimitador="-";
+							
+							if($tipoDelimitador){// Si el parámetro es una fecha
+								$fecha_array = explode($tipoDelimitador,$campo["val_args"][$clave]);
+								$faComparar = strtotime($fecha_array[2]."-".$fecha_array[1]."-".$fecha_array[0]);
+								if($faValidar < $faComparar){
+									if($campo["error"][$clave]){
+										$this->validacion_error = $campo["error"][$clave];
+									} else $this->validacion_error = "El campo ".$nombre." debe ser una fecha posterior a ".$campo["val_args"][$clave];
+									$this->validacion_campo_error = $id_campo;
+									return false;
+								}
+								
+							} else {// ** Si el parámetro es un campo al que se le comparará
+							
+								$campo_comparacion = $campo["val_args"][$clave];
+								if(!$this->campos[$campo_comparacion]["valor"]){ // verificar que sea un campo que exista
+									if($campo["error"][$clave]){
+										$this->validacion_error = $campo["error"][$clave];
+									} else $this->validacion_error = "Depurar: el campo $campo_comparacion no existe ";
+									$this->validacion_campo_error = $id_campo;
+									return false;
+								}
+								// Preparar para el error
+								if($this->campos[$campo_comparacion]["titulo"]!=NULL){
+									$nombre_comparacion = $this->campos[$campo_comparacion]["titulo"];
+								}else{
+									$nombre_comparacion = $campo_comparacion;
+								}
+								// parsear el campo de formulario al que se comparará
+								$valorComparar = $this->campos[$campo_comparacion]["valor"];
+								$tipoDelimitador = false;
+								if(strstr($valorComparar,"/")) $tipoDelimitador="/";
+								if(strstr($valorComparar,"-")) $tipoDelimitador="-";
+								
+								if($tipoDelimitador){// Si el campo es una fecha
+									$fecha_array = explode($tipoDelimitador, $valorComparar);
+									$faComparar = strtotime($fecha_array[2]."-".$fecha_array[1]."-".$fecha_array[0]);
+									if($faValidar < $faComparar){
+										if($campo["error"][$clave]){
+											$this->validacion_error = $campo["error"][$clave];
+										} else $this->validacion_error = "El campo ".$nombre." debe ser una fecha posterior a la del campo ".$nombre_comparacion;
+										$this->validacion_campo_error = $id_campo;
+										return false;
+									}
+								} 
+							}
+						}
+						break;
+					case "f<":
+					case "fecha <":
+						if(isset($campo["valor"]) && $campo["valor"] != ""){
+							$tipoDelimitador = false;
+							if(strstr($campo["valor"],"/")) $tipoDelimitador="/";
+							if(strstr($campo["valor"],"-")) $tipoDelimitador="-";
+							$fecha_array = explode($tipoDelimitador,$campo["valor"]);
+							$faValidar = strtotime($fecha_array[2]."-".$fecha_array[1]."-".$fecha_array[0]);
+							// parsear el parámetro pasado a la función
+							$tipoDelimitador = false;
+							if(strstr($campo["val_args"][$clave],"/")) $tipoDelimitador="/";
+							if(strstr($campo["val_args"][$clave],"-")) $tipoDelimitador="-";
+							
+							if($tipoDelimitador){// Si el parámetro es una fecha
+								$fecha_array = explode($tipoDelimitador,$campo["val_args"][$clave]);
+								$faComparar = strtotime($fecha_array[2]."-".$fecha_array[1]."-".$fecha_array[0]);
+								if($faValidar > $faComparar){
+									if($campo["error"][$clave]){
+										$this->validacion_error = $campo["error"][$clave];
+									} else $this->validacion_error = "El campo ".$nombre." debe ser una fecha anterior a ".$campo["val_args"][$clave];
+									$this->validacion_campo_error = $id_campo;
+									return false;
+								}
+								
+							} else {// ** Si el parámetro es un campo al que se le comparará
+							
+								$campo_comparacion = $campo["val_args"][$clave];
+								if(!$this->campos[$campo_comparacion]["valor"]){ // verificar que sea un campo que exista
+									if($campo["error"][$clave]){
+										$this->validacion_error = $campo["error"][$clave];
+									} else $this->validacion_error = "Depurar: el campo $campo_comparacion no existe ";
+									$this->validacion_campo_error = $id_campo;
+									return false;
+								}
+								// Preparar para el error
+								if($this->campos[$campo_comparacion]["titulo"]!=NULL){
+									$nombre_comparacion = $this->campos[$campo_comparacion]["titulo"];
+								}else{
+									$nombre_comparacion = $campo_comparacion;
+								}
+								// parsear el campo de formulario al que se comparará
+								$valorComparar = $this->campos[$campo_comparacion]["valor"];
+								$tipoDelimitador = false;
+								if(strstr($valorComparar,"/")) $tipoDelimitador="/";
+								if(strstr($valorComparar,"-")) $tipoDelimitador="-";
+
+								if($tipoDelimitador){// Si el campo es una fecha
+									$fecha_array = explode($tipoDelimitador, $valorComparar);
+									$faComparar = strtotime($fecha_array[2]."-".$fecha_array[1]."-".$fecha_array[0]);
+									if($faValidar > $faComparar){
+										if($campo["error"][$clave]){
+											$this->validacion_error = $campo["error"][$clave];
+										} else $this->validacion_error = "El campo ".$nombre." debe ser una fecha anterior a la del campo ".$nombre_comparacion;
+										$this->validacion_campo_error = $id_campo;
+										return false;
+									}
+								} 
+							}
+						}
+						break;
+					case ".?":
+					case "extensionarchivo":
+						if(isset($campo["valor"]) && $campo["valor"] != ""){
+							if(!$campo["val_args"][$clave]) {
+								$campo["val_args"][$clave] = "gif|jpg|jpeg|bmp|png";
+							} else {
+									$campo["val_args"][$clave] = str_replace(",","|",$campo["val_args"][$clave]);
+							}
+							if(!ereg("(\.(".$campo["val_args"][$clave]."))$",$campo["valor"])){
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else{ 
+									$ext_val = str_replace("|",", ",$campo["val_args"][$clave]);
+									$this->validacion_error = "En el campo ". $nombre .", solamente se permiten archivos cuya extensión sea ".$ext_val;
+								}
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+						}
+						break;
+					case "KB"://["archivo"]['size']
+					case "tamañoarchivo":
+						if(isset($campo["valor"]) && $campo["valor"] != ""){
+							if(!$campo["val_args"][$clave]){$campo["val_args"][$clave] = 1000;}
+							if($campo["archivo"]['size'] > ($campo["val_args"][$clave]*1024)){
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = "El archivo en el campo ".$nombre." debe ser de máximo ".$campo["val_args"][$clave]." KB (".round($campo["val_args"][$clave]/1024, 2)." MB)";
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+						}
+						break;
+					case "xxx":
+						if(isset($campo["valor"]) && $campo["valor"] != ""){
+							if(!preg_match($campo["val_args"][$clave],$campo["valor"])){
+								if($campo["error"][$clave]){
+									$this->validacion_error = $campo["error"][$clave];
+								} else $this->validacion_error = "El formato de ". $nombre ." no es el correcto ";
+								$this->validacion_campo_error = $id_campo;
+								return false;
+							}
+						}
+						break;
+					
+				}//case
+			}
+		}
+	return true;
+	}
+}
+/*
+al momento de insertar:
+$colname_checkMaxNames = (get_magic_quotes_gpc()) ? $HTTP_POST_VARS['email'] : addslashes($HTTP_POST_VARS['email']);
+*/
+/*
+							$atom = '[-a-z0-9!#$%&\'*+/=?^_`{|}~]';    // allowed characters for part before "at" character
+							$domain = '([a-z]([-a-z0-9]*[a-z0-9]+)?)'; // allowed characters for part after "at" character							
+							$regex = '^' . $atom . '+' .        // One or more atom characters.
+							'(\.' . $atom . '+)*'.              // Followed by zero or more dot separated sets of one or more atom characters.
+							'@'.                                // Followed by an "at" character.
+							'(' . $domain . '{1,63}\.)+'.        // Followed by one or max 63 domain characters (dot separated).
+							$domain . '{2,63}'.                  // Must be followed by one set consisting a period of two
+							'$';                                // or max 63 domain characters.
+							$pattern = "/^([a-zA-Z0-9])+([.a-zA-Z0-9_-])*@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-]+)+/";
+								if(!eregi($regex, $campo["valor"])){
+									if($campo["error"][$clave]){
+										$this->validacion_error = $campo["error"][$clave];
+									} else $this->validacion_error = "Debe ingresar un email válido ";
+								}
+								if (strlen($this->email)>100){
+									if($campo["error"][$clave]){
+										$this->validacion_error = $campo["error"][$clave];
+									} else $this->validacion_error = "El correo electrónico es demasiado largo";
+								}
+							*/
+?>

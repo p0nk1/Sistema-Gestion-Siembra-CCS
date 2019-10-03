@@ -1,0 +1,72 @@
+<?php
+	session_start();
+	include_once ("../../../../funciones/funciones_session.php");
+	comprobarSession($_SESSION['adminProy']);
+	include_once ("../../../../conexion/conexionpg.php");
+	include_once ("../../../../funciones/queryProyectos.php");
+	include_once ("../../../../funciones/funciones.php");
+	extract($_POST);
+	extract($_GET);
+	//ID DEL PROYECTO
+	$idProyecto=$id;
+
+	//BUSCA SI EL PROYECTO TIENE SOCIOS REGISTRADOS
+	$arraySocios = array();
+	$arraySocios = buscarSociosProyecto($idProyecto);
+?>
+<HTML>
+	<HEAD>
+		<link rel="stylesheet" type="text/css" href="../../../../css/css.css">
+		<SCRIPT language="JavaScript">
+			function lanzarSubmenu(ventana){
+				ventana_secundaria = window.open(ventana,"_blank","width=800,height=400,scrollbars=0,location=0")
+				ventana_secundaria.moveTo(400,300);
+			}
+			function lanzarSubmenuPequeno(ventana){
+				ventana_secundaria = window.open(ventana,"_blank","width=400,height=300,scrollbars=0,location=0")
+				ventana_secundaria.moveTo(400,300);
+			}
+		</SCRIPT>
+	</HEAD>
+	<BODY>
+		<FORM action="" id="RegSocios" name="RegSocios" method="POST">
+		<BR>
+		<!-- AQUI VA EL ENLACE PARA AGREGAR SOCIOS DEL PROYECTO -->
+		<?php if(empty($arraySocios)){ ?>
+			<TABLE id="tablaEnlace" border="0" cellpadding="3" cellspacing="1" align="center" width="95%">
+				<TR>
+					<TD align="center"><a href="#" class="link" onClick="lanzarSubmenu('registrarSocios.php?id=<?=$idProyecto?>')"><img src="../../../../imagenes/agregarSocios.jpg" border="0"></a></TD>
+				</TR>
+			</TABLE>
+		<?php } else if (!empty($arraySocios)){ ?>
+			<TABLE  id="tablaSocios" border="0" cellpadding="3" cellspacing="1" align="center" width="95%" bgcolor="#D6D6D6">
+				<TR><TD bgcolor="#F2F2F2" class="tituloTablas" align="center" colspan="5">SOCIOS</TD></TR>
+				<TR>
+					<TD bgcolor="#F2F2F2" class="tituloTablas" align="center" width="35%">Nombres y Apellidos</TD>
+					<TD bgcolor="#F2F2F2" class="tituloTablas" align="center" width="20%">Telefono</TD>
+					<TD bgcolor="#F2F2F2" class="tituloTablas" align="center" width="35%">Correo Electr&oacute;nico</TD>
+					<TD bgcolor="#F2F2F2" class="tituloTablas" align="center" width="10%" colspan="2">Acci&oacute;n</TD>
+				</TR>
+				<?php
+				$a=0;
+				foreach ($arraySocios['idSocio'] as $value) {
+					if($value!=''){
+				?>
+				<TR>
+					<TD bgcolor="White" class="textoCampo"><?=$arraySocios['nombApeSocio'][$a]?></TD>
+					<TD bgcolor="White" class="textoCampo"><?=$arraySocios['telefonoSocio'][$a]?></TD>
+					<TD bgcolor="White" class="textoCampo"><?=$arraySocios['emailSocio'][$a]?></TD>
+					<TD bgcolor="White" align="center"><a href="#" class="link" onClick="lanzarSubmenuPequeno('eliminarSocio.php?idSocio=<?=$arraySocios['idSocio'][$a]?>&idProyecto=<?=$idProyecto?>')"><img src="../../../imagenes/elimSocio.png" border="0"></a></TD>
+					<TD bgcolor="White" align="center"><a href="#" class="link" onClick="lanzarSubmenu('modificarSocio.php?idSocio=<?=$arraySocios['idSocio'][$a]?>&idProyecto=<?=$idProyecto?>')"><img src="../../../imagenes/editSocio.png" border="0"></a></TD>
+				</TR>
+				<?
+					}
+				$a++;
+				}
+				?>
+				<TR><TD bgcolor="White" align="center" colspan="5"><a href="#" class="link" onClick="lanzarSubmenu('registrarSocios.php?id=<?=$idProyecto?>')"><img src="../../../imagenes/add_socio.png" border="0" height="24" width="24"></a></TD></TR>
+			</TABLE>
+		<?php } ?>
+		</FORM>
+	</BODY>
+</HTML>

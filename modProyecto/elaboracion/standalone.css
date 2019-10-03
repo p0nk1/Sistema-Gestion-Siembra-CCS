@@ -1,0 +1,8 @@
+body {
+	padding: 0 0 0 0;
+	font-family:arial, verdana, sans-serif;
+}
+
+/* get rid of those system borders being generated for A tags */
+a:active { outline:none; }
+:focus { -moz-outline-style:none; }

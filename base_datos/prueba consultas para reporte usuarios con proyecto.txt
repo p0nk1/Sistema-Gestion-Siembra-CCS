@@ -1,0 +1,109 @@
+modificacion de la tabla v_proyecto (creacion de la referencia de llave foranea)
+
+ALTER TABLE public.v_proyecto
+  ADD CONSTRAINT id_usuario_registra_id_usuario FOREIGN KEY (id_usuario_registra) REFERENCES public.v_usuarios (id_usuario)
+   ON UPDATE NO ACTION ON DELETE NO ACTION;
+CREATE INDEX fki_id_usuario_registra_id_usuario
+  ON public.v_proyecto(id_usuario_registra);
+
+consulta de los usuarios que crearon proyectos
+SELECT 
+  v_usuarios.id_usuario, 
+  v_usuarios.cedula, 
+  v_usuarios.nombre_usuario, 
+  v_proyecto.id_proyecto, 
+  v_proyecto.nombre_proyecto, 
+  v_proyecto.id_usuario_registra
+FROM 
+  public.v_proyecto, 
+  public.v_usuarios
+WHERE 
+  v_usuarios.id_usuario = v_proyecto.id_usuario_registra
+ORDER BY
+  v_usuarios.id_usuario ASC;
+
+misma consulta con join
+
+SELECT 
+  u.id_usuario,
+  u.id_usuario_registra,
+  u.cedula,
+  u.nombre_usuario, 
+  p.id_proyecto,
+  p.nombre_proyecto,
+  p.id_usuario_registra
+FROM 
+  v_usuarios u 
+JOIN 
+  v_proyecto p on u.id_usuario = p.id_usuario_registra
+ORDER BY
+  u.id_usuario ASC;
+
+
+usuarioid
+usuarior
+cedula
+nombreu
+idproyecto
+nombreproyecto
+usuarior2
+
+
+
+modificacion dela tabla v_produtores_nuevo
+
+ALTER TABLE public.v_productores_nuevo ADD COLUMN id_proyecto integer;
+
+
+ALTER TABLE public.v_productores_nuevo
+  ADD CONSTRAINT fk_idproyecto FOREIGN KEY (id_proyecto)
+      REFERENCES public.v_proyecto (id_proyecto) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+consulta para traer los registros de v_proyecto y v_produtores_nuevo
+
+SELECT 
+  * 
+FROM 
+  public.v_proyecto, 
+  public.v_productores_nuevo, 
+  public.v_ubicacion_proyecto_georeferencial
+WHERE 
+  v_proyecto.id_proyecto = v_productores_nuevo.id_proyecto AND
+  v_proyecto.id_proyecto = v_ubicacion_proyecto_georeferencial.id_proyecto;
+
+SELECT 
+  a.*, b.*, c.*, d.*  
+FROM 
+  v_proyecto as a 
+JOIN 
+  v_productores_nuevo as b ON b.id_proyecto=a.id_proyecto LEFT JOIN v_produccion_proyecto as c ON c.id_proyecto=a.id_proyecto
+JOIN 
+  v_ubicacion_proyecto_georeferencial as d ON d.id_proyecto=a.id_proyecto
+WHERE 
+  a.id_proyecto='$id_proyecto' ORDER BY fecha_registro_proyecto DESC;
+
+consulta forzada para obtener los campos estado, municipio, parroquia, circuito 
+
+SELECT a.*, b.*, c.*, d.*  
+FROM v_proyecto as a 
+LEFT JOIN v_productores_nuevo as b 
+ON b.id_proyecto=a.id_proyecto LEFT JOIN v_produccion_proyecto as c ON c.id_proyecto=a.id_proyecto
+LEFT JOIN v_ubicacion_proyecto_georeferencial as d ON d.id_proyecto=a.id_proyecto
+	WHERE a.id_proyecto=3 ORDER BY fecha_registro_proyecto DESC;
+
+
+
+campos para el reporte de productores con proyecto
+
+Nombre Apellido, (estan en un solo campo) si
+cedula, si
+Telefono, (telefono1 o telefono2?) si 
+celular, (telefono1 o telefono2?) si
+correo, si
+estado, no
+municipio, no
+parroquia, no
+circuito, no
+proyecto asociado. (es necesario saber que datos del proyecto asociado necesita visualizar en el reporte) si
+

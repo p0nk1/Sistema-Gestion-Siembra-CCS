@@ -1,0 +1,125 @@
+<?php
+	session_start();
+	include_once ("../../../funciones/funciones_session.php");
+	comprobarSession($_SESSION['adminProy']);
+	include_once ("../../../conexion/conexionpg.php");
+	include_once ("../../../funciones/queryProyectos.php");
+	include_once ("../../../funciones/funciones.php");
+	extract($_POST);
+	extract($_GET);
+
+	//IDENTIFICADOR DEL PROYECTO
+	$idProyecto=$id;
+	//GUARDA DATOS DE LOS SOCIOS DEL PROYECTO
+	if(isset($regSocios)){
+		$experienciasLaborales = array();
+		$contadorexperienciasLaborales = 0;
+		$banderaexperienciasLaboralesNomEmpresa = $banderaexperienciasLaboralesRamo = $banderaexperienciasLaboralesCargo = false;
+		foreach ($_POST as $nombre_post => $valor_post) {
+			$auxiliar_post = substr($nombre_post, 0, 28);
+			if ($auxiliar_post == 'experienciaLaboralNomEmpresa') {
+				$experienciasLaborales[$contadorexperienciasLaborales]['experienciaLaboralNomEmpresa'] = $valor_post;
+				$banderaexperienciasLaboralesNomEmpresa = true;
+			}
+			$auxiliar_post = substr($nombre_post, 0, 22);
+			if ($auxiliar_post == 'experienciaLaboralRamo') {
+				$experienciasLaborales[$contadorexperienciasLaborales]['experienciaLaboralRamo'] = $valor_post;
+				$banderaexperienciasLaboralesRamo = true;
+			}
+			$auxiliar_post = substr($nombre_post, 0, 23);
+			if ($auxiliar_post == 'experienciaLaboralCargo') {
+				$experienciasLaborales[$contadorexperienciasLaborales]['experienciaLaboralCargo'] = $valor_post;
+				$banderaexperienciasLaboralesCargo = true;
+			}
+			if ($banderaexperienciasLaboralesNomEmpresa && $banderaexperienciasLaboralesRamo && $banderaexperienciasLaboralesCargo) {
+				$contadorexperienciasLaborales++;
+				$banderaexperienciasLaboralesNomEmpresa = $banderaexperienciasLaboralesRamo = $banderaexperienciasLaboralesCargo = false;
+			}
+		}
+		if(empty($experienciasLaborales)){
+			$sms= "Debe ingresar al menos un (1) Socio!!!";
+			mostrar_mensaje($sms);
+		}else{
+			//RECOGE DATOS PARA LA AUDITORIA
+			$usuarioRegistra=$_SESSION['adminProy']['id_usuario'];
+			$fechaRegistro=date('Y-m-d H:i:s');
+			//GUARDA SOCIOS DEL PROYECTO
+			$reg=registrarSociosProyecto($experienciasLaborales, $idProyecto);
+			print "<script>window.opener.location.reload();</script>";
+			print("<script>window.close();</script>");
+		}
+	}
+	//CANCELANDO AGREGAR SOCIOS
+	if(isset($cancelar)){
+		echo "<script language=javascript> window.close(); </script>";
+	}
+?>
+<HTML>
+	<HEAD>
+		<TITLE></TITLE>
+		<link rel="stylesheet" type="text/css" href="../../../css/css.css">
+		<script src="../../../js/general.js" type="text/javascript"></script>
+		<SCRIPT>
+			function campoTlfSolicitante(){
+				valorTlfSolicitante = document.getElementById("telefonoSolicitante").value;
+				if( !(/^\d{11}$/.test(valorTlfSolicitante)) ) {
+					alert("ESTE CAMPO NO DEBE SER MENOR NI MAYOR A 11 DIGITOS!!!");
+				  //return false;
+				}
+			}
+			function campoTlfSocio(){
+				valorTlfSocio = document.getElementById("telefonoSocio").value;
+				if( !(/^\d{11}$/.test(valorTlfSocio)) ) {
+					alert("ESTE CAMPO NO DEBE SER MENOR NI MAYOR A 11 DIGITOS!!!");
+				  //return false;
+				}
+			}
+			function validaremail(formRegSocios) { 
+				if (document.formRegSocios.emailSocio.value.indexOf('@') == -1) {
+					alert ("DEBE INGRESAR UNA DIRECCION DE CORREO VALIDA!!!"); 
+				document.formRegSocios.emailSocio.focus() ;
+				}
+			}
+		</SCRIPT>
+	</HEAD>
+	<BODY>
+	<BR>
+	<TABLE border="0" width="90%" cellpadding="0" cellspacing="0" align="center">
+		<TR><TD class="tituloBackground"> AGREGAR SOCIOS DE LA ORGANIZACION SOLICITANTE </TD></TR>
+	</TABLE>
+	<BR>
+	<FORM action="" id="formRegSocios" name="formRegSocios" method="POST" onsubmit="return validacion();">
+	<TABLE border="0" cellpadding="1" cellspacing="1" align="center" width="95%" bgcolor="#D6D6D6">
+		<TR>
+			<TD bgcolor="#F2F2F2" class="tituloTablas" align="center" width="35%">Nombres y Apellidos <span class="campo_obligatorio">*&nbsp;</span></TD>
+			<TD bgcolor="#F2F2F2" class="tituloTablas" align="center" width="20%">Tel&eacute;fono <span class="campo_obligatorio">*&nbsp;</span></TD>
+			<TD bgcolor="#F2F2F2" class="tituloTablas" align="center" width="35%">Correo Electr&oacute;nico <span class="campo_obligatorio">*&nbsp;</span></TD>
+			<TD bgcolor="#F2F2F2" class="tituloTablas" align="center" width="10%">Agregar</TD>
+		</TR>
+		<TR>
+			<TD bgcolor="White" align="center"><INPUT type="text" name="nombApeSocio" id="nombApeSocio" size="30"></TD>
+			<TD bgcolor="White" align="center"><INPUT onkeypress="return(formato_campo(this,event,1));" onchange="campoTlfSocio();" type="text" name="telefonoSocio" id="telefonoSocio" size="30" ></TD>
+			<TD bgcolor="White" align="center"><INPUT onchange="validaremail(this,form);" type="text" name="emailSocio" id="emailSocio" size="30"></TD>
+			<TD bgcolor="White" align="center"><IMG id="agregar" onclick="validarEmpleo('nombApeSocio','telefonoSocio','emailSocio','tablaSocios')" src="../../../imagenes/add_socio.png" title="Agregar"></TD>
+		</TR>
+	</TABLE>
+	<BR>
+	<TABLE  id="tablaSocios" border="0" cellpadding="3" cellspacing="1" align="center" width="95%" bgcolor="#D6D6D6">
+		<TR><TD bgcolor="#F2F2F2" class="tituloTablas" align="center" colspan="4">SOCIOS</TD></TR>
+		<TR>
+			<TD bgcolor="#F2F2F2" class="tituloTablas" align="center" width="35%">Nombres y Apellidos</TD>
+			<TD bgcolor="#F2F2F2" class="tituloTablas" align="center" width="20%">Telefono</TD>
+			<TD bgcolor="#F2F2F2" class="tituloTablas" align="center" width="35%">Correo Electr&oacute;nico</TD>
+			<TD bgcolor="#F2F2F2" class="tituloTablas" align="center" width="10%">Acci&oacute;n</TD>
+		</TR>
+	</TABLE>
+	<BR>
+	<TABLE id="tablaBoton" border="0" cellpadding="0" cellspacing="0" align="center" width="90%">
+		<TR>
+			<TD align="center"><INPUT id="regSocios" name="regSocios" type="submit" value="AGREGAR SOCIOS" class="botonGrande"></TD>
+			<TD align="center"><INPUT id="cancelar" name="cancelar" type="submit" value="CANCELAR" class="botonGrande"></TD>
+		</TR>
+	</TABLE>
+	</FORM>
+	</BODY>
+</HTML>
